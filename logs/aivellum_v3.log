@@ -1,0 +1,9 @@
+2025-10-28 09:21:37,919 ERROR: Data file not found: Aivellum_Sales (2).csv
+2025-10-28 09:23:50,220 ERROR: Failed to read CSV: 'utf-8' codec can't decode bytes in position 15-16: invalid continuation byte. Trying 'latin1' encoding.
+2025-10-28 09:23:50,225 ERROR: Failed to read CSV with 'latin1': Error tokenizing data. C error: Expected 2 fields in line 5, saw 3
+
+2025-10-28 09:23:50,228 ERROR: Processing returned an empty DataFrame.
+2025-10-28 09:24:53,628 INFO: Successfully loaded 'Aivellum_Sales (2).csv'
+2025-10-28 09:24:53,649 INFO: After date processing: 28 valid records
+2025-10-28 09:24:53,677 INFO: Data processing v3.0 complete.
+2025-10-28 09:24:53,679 INFO: Countries Found: ['United States', 'United Kingdom', 'Finland', 'Ecuador', 'Unknown', 'Hungary', 'Australia', 'Germany', 'Pakistan', 'Nigeria', 'India', 'South Africa', 'UAE', 'Czech Republic']

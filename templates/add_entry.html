@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Sale Entry - Aivellum Analytics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0f172a;
+            min-height: 100vh;
+            padding: 20px;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 30px 40px;
+            border-radius: 12px 12px 0 0;
+            border-bottom: 2px solid #3b82f6;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            color: #f1f5f9;
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            background: #334155;
+            color: #e2e8f0;
+            border: 1px solid #475569;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #475569;
+            border-color: #3b82f6;
+        }
+
+        .form-container {
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-grid.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            color: #f1f5f9;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        label .required {
+            color: #ef4444;
+            margin-left: 3px;
+        }
+
+        input, select, textarea {
+            padding: 12px 15px;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        input.error, select.error {
+            border-color: #ef4444;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        select option {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .currency-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .currency-input-group select {
+            flex: 0 0 100px;
+        }
+
+        .currency-input-group input {
+            flex: 1;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #334155;
+            color: #e2e8f0;
+            border: 1px solid #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #475569;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert.show {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-success {
+            background: #064e3b;
+            color: #6ee7b7;
+            border-left: 4px solid #10b981;
+        }
+
+        .alert-error {
+            background: #7f1d1d;
+            color: #fca5a5;
+            border-left: 4px solid #ef4444;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 5px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin: 30px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #334155;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #334155;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Add New Sale Entry</h1>
+            <p>Fill in all required fields to add a new transaction to the database</p>
+            <div class="nav-buttons">
+                <a href="/" class="nav-btn">← Back to Dashboard</a>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="alert alert-success" id="successAlert">
+                <span>✓</span>
+                <span id="successMessage"></span>
+            </div>
+
+            <div class="alert alert-error" id="errorAlert">
+                <span>✗</span>
+                <span id="errorMessage"></span>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p style="margin-top: 10px; color: #94a3b8;">Saving entry...</p>
+            </div>
+
+            <form id="entryForm">
+                <!-- Transaction Details -->
+                <div class="section-title">Transaction Details</div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Date <span class="required">*</span></label>
+                        <input type="date" id="date" required>
+                        <span class="error-message" id="dateError">Date is required</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Time <span class="required">*</span></label>
+                        <input type="time" id="time" required>
+                        <span class="error-message" id="timeError">Time is required</span>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Purchase ID <span class="required">*</span></label>
+                        <input type="text" id="purchaseId" placeholder="e.g., GPA.3358-1016-7927-87380" required>
+                        <span class="error-message" id="purchaseIdError">Purchase ID is required</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Platform <span class="required">*</span></label>
+                        <select id="platform" required>
+                            <option value="">Select Platform</option>
+                            <option value="Play Store">Play Store</option>
+                            <option value="Aivellum">Aivellum (Apple)</option>
+                            <option value="App Store">App Store</option>
+                            <option value="Stripe">Stripe</option>
+                            <option value="PayPal">PayPal</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span class="error-message" id="platformError">Platform is required</span>
+                    </div>
+                </div>
+
+                <!-- Customer Details -->
+                <div class="section-title">Customer Details</div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Country <span class="required">*</span></label>
+                        <select id="country" required>
+                            <option value="">Select Country</option>
+                        </select>
+                        <span class="error-message" id="countryError">Country is required</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>For (Users)</label>
+                        <select id="forUsers">
+                            <option value="">Select User Type</option>
+                            <option value="Android">Android</option>
+                            <option value="iOS">iOS</option>
+                            <option value="Apple">Apple</option>
+                            <option value="Web">Web</option>
+                            <option value="Desktop">Desktop</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <p class="help-text">Optional: Platform/device type</p>
+                    </div>
+                </div>
+
+                <div class="form-grid full">
+                    <div class="form-group">
+                        <label>Billing Address</label>
+                        <textarea id="billingAddress" placeholder="Enter full billing address (optional)"></textarea>
+                        <p class="help-text">Reference only - not used for country detection</p>
+                    </div>
+                </div>
+
+                <!-- Financial Details -->
+                <div class="section-title">Financial Details</div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Total Amount Paid <span class="required">*</span></label>
+                        <div class="currency-input-group">
+                            <select id="totalCurrency" required></select>
+                            <input type="number" id="totalAmount" step="0.01" placeholder="0.00" required>
+                        </div>
+                        <span class="error-message" id="totalAmountError">Total amount is required</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>List Price <span class="required">*</span></label>
+                        <div class="currency-input-group">
+                            <select id="listCurrency" required></select>
+                            <input type="number" id="listPrice" step="0.01" placeholder="0.00" required>
+                        </div>
+                        <span class="error-message" id="listPriceError">List price is required</span>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Tax Amount</label>
+                        <div class="currency-input-group">
+                            <select id="taxCurrency"></select>
+                            <input type="number" id="taxAmount" step="0.01" placeholder="0.00">
+                        </div>
+                        <p class="help-text">Optional: Total Amount - List Price</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Net Amount (After Deductions)</label>
+                        <div class="currency-input-group">
+                            <select id="netCurrency"></select>
+                            <input type="number" id="netAmount" step="0.01" placeholder="0.00">
+                        </div>
+                        <p class="help-text">Optional: Amount after platform fees</p>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="button-group">
+                    <button type="button" class="btn-secondary" onclick="resetForm()">Clear Form</button>
+                    <button type="submit" class="btn-primary" id="submitBtn">Add Entry</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // All currencies with their codes
+        const ALL_CURRENCIES = [
+            'USD', 'EUR', 'GBP', 'INR', 'AUD', 'CAD', 'JPY', 'CHF', 'NZD', 'SGD',
+            'HKD', 'CNY', 'KRW', 'TWD', 'THB', 'MYR', 'IDR', 'PHP', 'VND', 'PKR',
+            'BDT', 'LKR', 'NPR', 'MMK', 'KHR', 'LAK', 'AED', 'SAR', 'QAR', 'KWD',
+            'BHD', 'OMR', 'JOD', 'ILS', 'EGP', 'ZAR', 'NGN', 'KES', 'GHS', 'TZS',
+            'UGX', 'MAD', 'TND', 'DZD', 'LYD', 'ETB', 'SEK', 'NOK', 'DKK', 'PLN',
+            'CZK', 'HUF', 'RON', 'BGN', 'HRK', 'RSD', 'TRY', 'RUB', 'UAH', 'ISK',
+            'MXN', 'BRL', 'ARS', 'CLP', 'COP', 'PEN', 'VES', 'UYU', 'BOB', 'PYG',
+            'CRC', 'GTQ', 'DOP', 'JMD', 'TTD', 'FJD', 'PGK', 'WST', 'TOP'
+        ];
+
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadCountries();
+            await loadCurrencies();
+            setDefaultDateTime();
+        });
+
+        // Load currencies
+        async function loadCurrencies() {
+            const selects = ['totalCurrency', 'listCurrency', 'taxCurrency', 'netCurrency'];
+            
+            selects.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                ALL_CURRENCIES.forEach(currency => {
+                    const option = document.createElement('option');
+                    option.value = currency;
+                    option.textContent = currency;
+                    select.appendChild(option);
+                });
+                
+                // Set default to USD
+                select.value = 'USD';
+            });
+        }
+
+        // Load countries from API
+        async function loadCountries() {
+            try {
+                const response = await fetch('/api/countries');
+                const data = await response.json();
+                
+                const countrySelect = document.getElementById('country');
+                
+                // Add all major countries manually first
+                const allCountries = [
+                    'Afghanistan', 'Albania', 'Algeria', 'Argentina', 'Australia', 'Austria',
+                    'Bangladesh', 'Belgium', 'Brazil', 'Canada', 'Chile', 'China', 'Colombia',
+                    'Croatia', 'Czech Republic', 'Denmark', 'Ecuador', 'Egypt', 'Finland', 'France',
+                    'Germany', 'Greece', 'Hong Kong', 'Hungary', 'India', 'Indonesia', 'Iran',
+                    'Iraq', 'Ireland', 'Israel', 'Italy', 'Japan', 'Jordan', 'Kenya', 'Kuwait',
+                    'Malaysia', 'Mexico', 'Morocco', 'Netherlands', 'New Zealand', 'Nigeria',
+                    'Norway', 'Pakistan', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar',
+                    'Romania', 'Russia', 'Saudi Arabia', 'Singapore', 'South Africa', 'South Korea',
+                    'Spain', 'Sri Lanka', 'Sweden', 'Switzerland', 'Taiwan', 'Thailand', 'Turkey',
+                    'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Vietnam'
+                ];
+                
+                allCountries.sort().forEach(country => {
+                    const option = document.createElement('option');
+                    option.value = country;
+                    option.textContent = country;
+                    countrySelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading countries:', error);
+            }
+        }
+
+        // Set current date and time
+        function setDefaultDateTime() {
+            const now = new Date();
+            
+            // Set date
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            document.getElementById('date').value = `${year}-${month}-${day}`;
+            
+            // Set time
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('time').value = `${hours}:${minutes}`;
+        }
+
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            
+            // Clear all errors
+            document.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
+            document.querySelectorAll('input, select').forEach(el => el.classList.remove('error'));
+            
+            // Required fields
+            const required = [
+                { id: 'date', error: 'dateError' },
+                { id: 'time', error: 'timeError' },
+                { id: 'purchaseId', error: 'purchaseIdError' },
+                { id: 'platform', error: 'platformError' },
+                { id: 'country', error: 'countryError' },
+                { id: 'totalAmount', error: 'totalAmountError' },
+                { id: 'listPrice', error: 'listPriceError' }
+            ];
+            
+            required.forEach(field => {
+                const input = document.getElementById(field.id);
+                const error = document.getElementById(field.error);
+                
+                if (!input.value || input.value.trim() === '') {
+                    input.classList.add('error');
+                    error.classList.add('show');
+                    isValid = false;
+                }
+            });
+            
+            // Validate amounts are positive
+            const amountFields = ['totalAmount', 'listPrice'];
+            amountFields.forEach(fieldId => {
+                const input = document.getElementById(fieldId);
+                if (input.value && parseFloat(input.value) <= 0) {
+                    input.classList.add('error');
+                    document.getElementById(fieldId + 'Error').textContent = 'Amount must be greater than 0';
+                    document.getElementById(fieldId + 'Error').classList.add('show');
+                    isValid = false;
+                }
+            });
+            
+            return isValid;
+        }
+
+        // Handle form submission
+        document.getElementById('entryForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Validate
+            if (!validateForm()) {
+                showError('Please fill in all required fields correctly');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loading').classList.add('show');
+            document.getElementById('submitBtn').disabled = true;
+            hideAlerts();
+            
+            // Prepare data
+            const formData = {
+                date: document.getElementById('date').value,
+                time: document.getElementById('time').value + ':00 UTC',
+                purchase_id: document.getElementById('purchaseId').value.trim(),
+                platform: document.getElementById('platform').value,
+                country: document.getElementById('country').value,
+                for_users: document.getElementById('forUsers').value || '',
+                billing_address: document.getElementById('billingAddress').value.trim() || '',
+                total_amount: `${document.getElementById('totalCurrency').value} ${document.getElementById('totalAmount').value}`,
+                list_price: `${document.getElementById('listCurrency').value} ${document.getElementById('listPrice').value}`,
+                tax: document.getElementById('taxAmount').value ? 
+                     `${document.getElementById('taxCurrency').value} ${document.getElementById('taxAmount').value}` : '',
+                net_amount: document.getElementById('netAmount').value ? 
+                           `${document.getElementById('netCurrency').value} ${document.getElementById('netAmount').value}` : ''
+            };
+            
+            try {
+                const response = await fetch('/api/add-entry', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showSuccess(`Entry #${result.entry_number} added successfully! Redirecting...`);
+                    resetForm();
+                    
+                    // Redirect after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 2000);
+                } else {
+                    showError(result.error || 'Failed to add entry');
+                }
+            } catch (error) {
+                showError('Network error: ' + error.message);
+            } finally {
+                document.getElementById('loading').classList.remove('show');
+                document.getElementById('submitBtn').disabled = false;
+            }
+        });
+
+        // Reset form
+        function resetForm() {
+            document.getElementById('entryForm').reset();
+            setDefaultDateTime();
+            hideAlerts();
+            document.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
+            document.querySelectorAll('input, select').forEach(el => el.classList.remove('error'));
+            
+            // Reset currency selects to USD
+            ['totalCurrency', 'listCurrency', 'taxCurrency', 'netCurrency'].forEach(id => {
+                document.getElementById(id).value = 'USD';
+            });
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            hideAlerts();
+            const alert = document.getElementById('successAlert');
+            document.getElementById('successMessage').textContent = message;
+            alert.classList.add('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show error message
+        function showError(message) {
+            hideAlerts();
+            const alert = document.getElementById('errorAlert');
+            document.getElementById('errorMessage').textContent = message;
+            alert.classList.add('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Hide all alerts
+        function hideAlerts() {
+            document.getElementById('successAlert').classList.remove('show');
+            document.getElementById('errorAlert').classList.remove('show');
+        }
+
+        // Sync currency selects
+        document.getElementById('totalCurrency').addEventListener('change', (e) => {
+            document.getElementById('listCurrency').value = e.target.value;
+            document.getElementById('taxCurrency').value = e.target.value;
+            document.getElementById('netCurrency').value = e.target.value;
+        });
+    </script>
+</body>
+</html>

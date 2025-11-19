@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aivellum Analytics | Professional Dashboard</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --dark: #0f172a;
+            --dark-card: #1e293b;
+            --border: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--info));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        /* Filters Card */
+        .filters-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-label {
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .form-control, .form-select {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            border-radius: 8px;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background: rgba(15, 23, 42, 0.8);
+            border-color: var(--primary);
+            color: var(--text-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(51, 65, 85, 0.6);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(51, 65, 85, 0.8);
+        }
+        
+        /* Tabs */
+        .nav-tabs {
+            border: none;
+            background: rgba(30, 41, 59, 0.6);
+            padding: 0.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+        
+        .nav-tabs .nav-link {
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+        
+        /* KPI Cards */
+        .kpi-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--info));
+        }
+        
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .kpi-card.success::before {
+            background: linear-gradient(90deg, var(--success), #34d399);
+        }
+        
+        .kpi-card.warning::before {
+            background: linear-gradient(90deg, var(--warning), #fbbf24);
+        }
+        
+        .kpi-card.danger::before {
+            background: linear-gradient(90deg, var(--danger), #f87171);
+        }
+        
+        .kpi-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .kpi-subtext {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .kpi-icon {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+        
+        /* Chart Cards */
+        .chart-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        .chart-container.tall {
+            height: 400px;
+        }
+        
+        /* Table */
+        .table {
+            color: var(--text-primary);
+        }
+        
+        .table thead th {
+            background: rgba(15, 23, 42, 0.6);
+            border: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 1rem;
+        }
+        
+        .table tbody td {
+            border-color: var(--border);
+            padding: 1rem;
+        }
+        
+        .table tbody tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+        
+        /* Insights Cards */
+        .insight-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .insight-card.success {
+            border-left-color: var(--success);
+        }
+        
+        .insight-card.warning {
+            border-left-color: var(--warning);
+        }
+        
+        .insight-card.critical {
+            border-left-color: var(--danger);
+        }
+        
+        .insight-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .insight-message {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .insight-action {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 8px;
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .badge {
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+        
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+        
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.3rem;
+        }
+        
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1050;
+        }
+        
+        .toast {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+        
+        .toast-header {
+            background: transparent;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .kpi-value {
+                font-size: 1.5rem;
+            }
+            
+            .chart-container {
+                height: 250px;
+            }
+            
+            .nav-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <div class="logo">🚀</div>
+                Aivellum Analytics
+            </a>
+            <div class="d-flex gap-2">
+                <button class="btn btn-secondary btn-sm" onclick="refreshData()">
+                    🔄 Refresh
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="exportData()">
+                    📥 Export
+                </button>
+                <a href="/add-entry" class="btn btn-primary btn-sm">
+                    ➕ Add Entry
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container-fluid py-4">
+        <!-- Filters -->
+        <div class="filters-card">
+            <h5 class="mb-3">🔍 Filters</h5>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Start Date</label>
+                    <input type="date" id="startDate" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">End Date</label>
+                    <input type="date" id="endDate" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Country</label>
+                    <select id="countryFilter" class="form-select">
+                        <option value="all">All Countries</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Platform</label>
+                    <select id="platformFilter" class="form-select">
+                        <option value="all">All Platforms</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button class="btn btn-primary w-100" onclick="applyFilters()">
+                        ✓ Apply
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <ul class="nav nav-tabs" id="mainTabs" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#overview">
+                    📊 Overview
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#trends" onclick="loadTrends('weekly')">
+                    📈 Trends
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#geographic" onclick="loadGeographic()">
+                    🌍 Geographic
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#platforms" onclick="loadPlatforms()">
+                    📱 Platforms
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#insights" onclick="loadInsights()">
+                    🤖 AI Insights
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#forecast" onclick="loadForecast()">
+                    🔮 Forecast
+                </button>
+            </li>
+        </ul>
+        
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Overview Tab -->
+            <div class="tab-pane fade show active" id="overview">
+                <!-- KPI Cards -->
+                <div class="row" id="kpiGrid">
+                    <div class="col-12">
+                        <div class="loading">
+                            <div class="spinner-border text-primary"></div>
+                            <p class="mt-3 text-muted">Loading metrics...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Charts -->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="chart-card">
+                            <h5 class="chart-title">💰 Revenue Overview</h5>
+                            <div class="chart-container">
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="chart-card">
+                            <h5 class="chart-title">📦 Order Distribution</h5>
+                            <div class="chart-container">
+                                <canvas id="orderDistChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="chart-card">
+                            <h5 class="chart-title">🕐 Hourly Activity</h5>
+                            <div class="chart-container">
+                                <canvas id="hourlyChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="chart-card">
+                            <h5 class="chart-title">📅 Day of Week</h5>
+                            <div class="chart-container">
+                                <canvas id="dowChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trends Tab -->
+            <div class="tab-pane fade" id="trends">
+                <div class="mb-3">
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="loadTrends('daily')">Daily</button>
+                        <button class="btn btn-secondary active" onclick="loadTrends('weekly')">Weekly</button>
+                        <button class="btn btn-secondary" onclick="loadTrends('monthly')">Monthly</button>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <h5 class="chart-title">📈 Revenue Trends</h5>
+                    <div class="chart-container tall">
+                        <canvas id="trendsChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <h5 class="chart-title">📊 Trends Data</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="trendsTable">
+                            <thead>
+                                <tr>
+                                    <th>Period</th>
+                                    <th>Revenue (₹)</th>
+                                    <th>Orders</th>
+                                    <th>AOV (₹)</th>
+                                    <th>Net Revenue (₹)</th>
+                                    <th>Growth %</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Geographic Tab -->
+            <div class="tab-pane fade" id="geographic">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="chart-card">
+                            <h5 class="chart-title">🗺️ Top Countries</h5>
+                            <div class="chart-container">
+                                <canvas id="geoChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="chart-card">
+                            <h5 class="chart-title">📍 Market Share</h5>
+                            <div class="chart-container">
+                                <canvas id="marketShareChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <h5 class="chart-title">🌍 Geographic Performance</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="geoTable">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Country</th>
+                                    <th>Revenue (₹)</th>
+                                    <th>Orders</th>
+                                    <th>AOV (₹)</th>
+                                    <th>Net Revenue (₹)</th>
+                                    <th>Market Share</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Platforms Tab -->
+            <div class="tab-pane fade" id="platforms">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="chart-card">
+                            <h5 class="chart-title">📱 Platform Revenue</h5>
+                            <div class="chart-container">
+                                <canvas id="platformRevenueChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="chart-card">
+                            <h5 class="chart-title">💸 Platform Fees</h5>
+                            <div class="chart-container">
+                                <canvas id="platformFeesChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <h5 class="chart-title">📊 Platform Performance</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="platformTable">
+                            <thead>
+                                <tr>
+                                    <th>Platform</th>
+                                    <th>Revenue (₹)</th>
+                                    <th>Orders</th>
+                                    <th>AOV (₹)</th>
+                                    <th>Net Revenue (₹)</th>
+                                    <th>Avg Fee %</th>
+                                    <th>Countries</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AI Insights Tab -->
+            <div class="tab-pane fade" id="insights">
+                <div id="insightsContainer">
+                    <div class="loading">
+                        <div class="spinner-border text-primary"></div>
+                        <p class="mt-3 text-muted">Generating AI insights...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Forecast Tab -->
+            <div class="tab-pane fade" id="forecast">
+                <div class="chart-card">
+                    <h5 class="chart-title">🔮 7-Day Revenue Forecast</h5>
+                    <div class="chart-container tall">
+                        <canvas id="forecastChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Global state
+        const state = {
+            charts: {},
+            filters: {
+                startDate: null,
+                endDate: null,
+                country: 'all',
+                platform: 'all'
+            }
+        };
+        
+        const COLORS = {
+            primary: '#6366f1',
+            success: '#10b981',
+            warning: '#f59e0b',
+            danger: '#ef4444',
+            info: '#3b82f6',
+            rainbow: ['#6366f1', '#8b5cf6', '#ec4899', '#f43f5e', '#f59e0b', '#10b981', '#06b6d4']
+        };
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFilterOptions();
+            loadKPIs();
+            loadOverviewCharts();
+        });
+        
+        // API Helper
+        async function fetchAPI(endpoint, params = {}) {
+            try {
+                const url = new URL(`/api/${endpoint}`, window.location.origin);
+                Object.keys(params).forEach(key => {
+                    if (params[key] && params[key] !== 'null') {
+                        url.searchParams.append(key, params[key]);
+                    }
+                });
+                
+                console.log('Fetching:', url.toString());
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.error || 'API Error');
+                }
+                
+                return data.data;
+            } catch (error) {
+                console.error(`API Error (${endpoint}):`, error);
+                showToast('Error', `Failed to load ${endpoint}`, 'danger');
+                throw error;
+            }
+        }
+        
+        // Load filter options
+        async function loadFilterOptions() {
+            try {
+                const options = await fetchAPI('filters/options');
+                
+                const countrySelect = document.getElementById('countryFilter');
+                const platformSelect = document.getElementById('platformFilter');
+                
+                options.countries.forEach(country => {
+                    const option = document.createElement('option');
+                    option.value = country;
+                    option.textContent = country;
+                    countrySelect.appendChild(option);
+                });
+                
+                options.platforms.forEach(platform => {
+                    const option = document.createElement('option');
+                    option.value = platform;
+                    option.textContent = platform;
+                    platformSelect.appendChild(option);
+                });
+                
+                // Set default dates
+                document.getElementById('endDate').value = options.date_range.max;
+                const startDate = new Date(options.date_range.max);
+                startDate.setDate(startDate.getDate() - 30);
+                document.getElementById('startDate').value = startDate.toISOString().split('T')[0];
+            } catch (error) {
+                console.error('Filter options error:', error);
+            }
+        }
+        
+        // Apply filters
+        function applyFilters() {
+            state.filters = {
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value,
+                country: document.getElementById('countryFilter').value,
+                platform: document.getElementById('platformFilter').value
+            };
+            
+            console.log('Applying filters:', state.filters);
+            showToast('Filters Applied', 'Refreshing data...', 'info');
+            refreshData();
+        }
+        
+        // Refresh data
+        async function refreshData() {
+            await loadKPIs();
+            await loadOverviewCharts();
+            showToast('Success', 'Data refreshed successfully', 'success');
+        }
+        
+        // Load KPIs
+        async function loadKPIs() {
+            try {
+                const data = await fetchAPI('kpis', state.filters);
+                const kpis = data.kpis;
+                
+                document.getElementById('kpiGrid').innerHTML = `
+                    <div class="col-lg-3 col-md-6">
+                        <div class="kpi-card">
+                            <div class="kpi-icon">💰</div>
+                            <div class="kpi-label">Gross Revenue</div>
+                            <div class="kpi-value">₹${formatNumber(kpis.revenue.gross)}</div>
+                            <div class="kpi-subtext">Total sales revenue</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="kpi-card success">
+                            <div class="kpi-icon">✅</div>
+                            <div class="kpi-label">Net Revenue</div>
+                            <div class="kpi-value">₹${formatNumber(kpis.revenue.net)}</div>
+                            <div class="kpi-subtext">${kpis.revenue.net_margin}% margin</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="kpi-card warning">
+                            <div class="kpi-icon">📦</div>
+                            <div class="kpi-label">Total Orders</div>
+                            <div class="kpi-value">${kpis.orders.total}</div>
+                            <div class="kpi-subtext">${kpis.geographic.countries} countries</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="kpi-card danger">
+                            <div class="kpi-icon">📊</div>
+                            <div class="kpi-label">Avg Order Value</div>
+                            <div class="kpi-value">₹${formatNumber(kpis.orders.avg_value)}</div>
+                            <div class="kpi-subtext">Per transaction</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="kpi-card">
+                            <div class="kpi-icon">👤</div>
+                            <div class="kpi-label">Customer CLV</div>
+                            <div class="kpi-value">₹${formatNumber(kpis.customer.clv)}</div>
+                            <div class="kpi-subtext">Lifetime value</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="kpi-card">
+                            <div class="kpi-icon">📅</div>
+                            <div class="kpi-label">Revenue/Day</div>
+                            <div class="kpi-value">₹${formatNumber(kpis.temporal.revenue_per_day)}</div>
+                            <div class="kpi-subtext">${kpis.temporal.orders_per_day.toFixed(1)} orders/day</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="kpi-card success">
+                            <div class="kpi-icon">🌍</div>
+                            <div class="kpi-label">Top Market</div>
+                            <div class="kpi-value" style="font-size: 1.5rem;">${kpis.geographic.top_country}</div>
+                            <div class="kpi-subtext">Leading market</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="kpi-card">
+                            <div class="kpi-icon">📱</div>
+                            <div class="kpi-label">Top Platform</div>
+                            <div class="kpi-value" style="font-size: 1.5rem;">${kpis.platform.top_platform}</div>
+                            <div class="kpi-subtext">${kpis.platform.platforms} platforms</div>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('KPI error:', error);
+            }
+        }
+        
+        // Load overview charts
+        async function loadOverviewCharts() {
+            try {
+                const [trends, temporal, platforms] = await Promise.all([
+                    fetchAPI('revenue-trends', { ...state.filters, granularity: 'daily' }),
+                    fetchAPI('temporal-patterns', state.filters),
+                    fetchAPI('platforms', state.filters)
+                ]);
+                
+                renderRevenueChart(trends);
+                renderOrderDistChart(platforms);
+                renderHourlyChart(temporal.hourly);
+                renderDowChart(temporal.day_of_week);
+            } catch (error) {
+                console.error('Overview charts error:', error);
+            }
+        }
+        
+        // Render revenue chart
+        function renderRevenueChart(data) {
+            const ctx = document.getElementById('revenueChart');
+            
+            if (state.charts.revenue) {
+                state.charts.revenue.destroy();
+            }
+            
+            state.charts.revenue = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => d.date),
+                    datasets: [{
+                        label: 'Gross Revenue',
+                        data: data.map(d => d.revenue),
+                        borderColor: COLORS.primary,
+                        backgroundColor: COLORS.primary + '20',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Net Revenue',
+                        data: data.map(d => d.net_revenue),
+                        borderColor: COLORS.success,
+                        backgroundColor: COLORS.success + '20',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#cbd5e1' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            ticks: { color: '#cbd5e1' },
+                            grid: { color: '#334155' }
+                        },
+                        x: {
+                            ticks: { color: '#cbd5e1', maxRotation: 45 },
+                            grid: { color: '#334155' }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Render order distribution chart
+        function renderOrderDistChart(data) {
+            const ctx = document.getElementById('orderDistChart');
+            
+            if (state.charts.orderDist) {
+                state.charts.orderDist.destroy();
+            }
+            
+            state.charts.orderDist = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: data.map(d => d.Platform),
+                    datasets: [{
+                        data: data.map(d => d.orders),
+                        backgroundColor: COLORS.rainbow
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#cbd5e1' }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Render hourly chart
+        function renderHourlyChart(data) {
+            const ctx = document.getElementById('hourlyChart');
+            
+            if (state.charts.hourly) {
+                state.charts.hourly.destroy();
+            }
+            
+            state.charts.hourly = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(d => `${d.hour}:00`),
+                    datasets: [{
+                        label: 'Orders',
+                        data: data.map(d => d.orders),
+                        backgroundColor: COLORS.info
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#cbd5e1' } }
+                    },
+                    scales: {
+                        y: {
+                            ticks: { color: '#cbd5e1' },
+                            grid: { color: '#334155' }
+                        },
+                        x: {
+                            ticks: { color: '#cbd5e1' },
+                            grid: { color: '#334155' }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Render day of week chart
+        function renderDowChart(data) {
+            const ctx = document.getElementById('dowChart');
+            
+            if (state.charts.dow) {
+                state.charts.dow.destroy();
+            }
+            
+            state.charts.dow = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(d => d.day.substring(0, 3)),
+                    datasets: [{
+                        label: 'Revenue (₹)',
+                        data: data.map(d => d.revenue),
+                        backgroundColor: COLORS.primary
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#cbd5e1' } }
+                    },
+                    scales: {
+                        y: {
+                            ticks: { color: '#cbd5e1' },
+                            grid: { color: '#334155' }
+                        },
+                        x: {
+                            ticks: { color: '#cbd5e1' },
+                            grid: { color: '#334155' }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Load trends
+        async function loadTrends(granularity) {
+            try {
+                const data = await fetchAPI('revenue-trends', { ...state.filters, granularity });
+                
+                const ctx = document.getElementById('trendsChart');
+                
+                if (state.charts.trends) {
+                    state.charts.trends.destroy();
+                }
+                
+                const labels = data.map(d => {
+                    if (granularity === 'daily') return d.date;
+                    if (granularity === 'weekly') return `Week ${d.week}`;
+                    return d.month;
+                });
+                
+                state.charts.trends = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Revenue',
+                            data: data.map(d => d.revenue),
+                            borderColor: COLORS.primary,
+                            backgroundColor: COLORS.primary + '20',
+                            fill: true,
+                            tension: 0.4,
+                            yAxisID: 'y'
+                        }, {
+                            label: 'Orders',
+                            data: data.map(d => d.orders),
+                            borderColor: COLORS.warning,
+                            backgroundColor: COLORS.warning + '20',
+                            fill: true,
+                            tension: 0.4,
+                            yAxisID: 'y1'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { color: '#cbd5e1' } }
+                        },
+                        scales: {
+                            y: {
+                                type: 'linear',
+                                position: 'left',
+                                ticks: { color: '#cbd5e1' },
+                                grid: { color: '#334155' }
+                            },
+                            y1: {
+                                type: 'linear',
+                                position: 'right',
+                                ticks: { color: '#cbd5e1' },
+                                grid: { display: false }
+                            },
+                            x: {
+                                ticks: { color: '#cbd5e1', maxRotation: 45 },
+                                grid: { color: '#334155' }
+                            }
+                        }
+                    }
+                });
+                
+                // Update table
+                const tbody = document.querySelector('#trendsTable tbody');
+                tbody.innerHTML = data.map(row => {
+                    const period = granularity === 'daily' ? row.date : 
+                                  granularity === 'weekly' ? `Week ${row.week}` : row.month;
+                    const growth = row.growth ? `<span class="badge ${row.growth >= 0 ? 'bg-success' : 'bg-danger'}">${row.growth >= 0 ? '↑' : '↓'} ${Math.abs(row.growth).toFixed(1)}%</span>` : '-';
+                    
+                    return `
+                        <tr>
+                            <td><strong>${period}</strong></td>
+                            <td>₹${formatNumber(row.revenue)}</td>
+                            <td>${row.orders}</td>
+                            <td>₹${formatNumber(row.avg_order)}</td>
+                            <td>₹${formatNumber(row.net_revenue)}</td>
+                            <td>${growth}</td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Trends error:', error);
+            }
+        }
+        
+        // Load geographic
+        async function loadGeographic() {
+            try {
+                const data = await fetchAPI('geographic', { ...state.filters, limit: 20 });
+                
+                // Top countries chart
+                const geoCtx = document.getElementById('geoChart');
+                if (state.charts.geo) state.charts.geo.destroy();
+                
+                state.charts.geo = new Chart(geoCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.slice(0, 10).map(d => d.Country),
+                        datasets: [{
+                            label: 'Revenue (₹)',
+                            data: data.slice(0, 10).map(d => d.revenue),
+                            backgroundColor: COLORS.primary
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        plugins: {
+                            legend: { labels: { color: '#cbd5e1' } }
+                        },
+                        scales: {
+                            y: {
+                                ticks: { color: '#cbd5e1' },
+                                grid: { color: '#334155' }
+                            },
+                            x: {
+                                ticks: { color: '#cbd5e1' },
+                                grid: { color: '#334155' }
+                            }
+                        }
+                    }
+                });
+                
+                // Market share chart
+                const marketCtx = document.getElementById('marketShareChart');
+                if (state.charts.marketShare) state.charts.marketShare.destroy();
+                
+                state.charts.marketShare = new Chart(marketCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: data.slice(0, 8).map(d => d.Country),
+                        datasets: [{
+                            data: data.slice(0, 8).map(d => d.market_share),
+                            backgroundColor: COLORS.rainbow
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                                labels: { color: '#cbd5e1' }
+                            }
+                        }
+                    }
+                });
+                
+                // Update table
+                const tbody = document.querySelector('#geoTable tbody');
+                tbody.innerHTML = data.map((row, index) => `
+                    <tr>
+                        <td><strong>#${index + 1}</strong></td>
+                        <td>${row.Country}</td>
+                        <td>₹${formatNumber(row.revenue)}</td>
+                        <td>${row.orders}</td>
+                        <td>₹${formatNumber(row.aov)}</td>
+                        <td>₹${formatNumber(row.net_revenue)}</td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="progress flex-grow-1" style="height: 8px;">
+                                    <div class="progress-bar bg-primary" style="width: ${row.market_share}%"></div>
+                                </div>
+                                <span>${row.market_share}%</span>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Geographic error:', error);
+            }
+        }
+        
+        // Load platforms
+        async function loadPlatforms() {
+            try {
+                const data = await fetchAPI('platforms', state.filters);
+                
+                // Platform revenue chart
+                const revCtx = document.getElementById('platformRevenueChart');
+                if (state.charts.platformRevenue) state.charts.platformRevenue.destroy();
+                
+                state.charts.platformRevenue = new Chart(revCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.map(d => d.Platform),
+                        datasets: [{
+                            label: 'Gross Revenue',
+                            data: data.map(d => d.revenue),
+                            backgroundColor: COLORS.primary
+                        }, {
+                            label: 'Net Revenue',
+                            data: data.map(d => d.net_revenue),
+                            backgroundColor: COLORS.success
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { color: '#cbd5e1' } }
+                        },
+                        scales: {
+                            y: {
+                                ticks: { color: '#cbd5e1' },
+                                grid: { color: '#334155' }
+                            },
+                            x: {
+                                ticks: { color: '#cbd5e1' },
+                                grid: { color: '#334155' }
+                            }
+                        }
+                    }
+                });
+                
+                // Platform fees chart
+                const feesCtx = document.getElementById('platformFeesChart');
+                if (state.charts.platformFees) state.charts.platformFees.destroy();
+                
+                state.charts.platformFees = new Chart(feesCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: data.map(d => `${d.Platform} (${d.avg_fee}%)`),
+                        datasets: [{
+                            data: data.map(d => d.avg_fee),
+                            backgroundColor: COLORS.rainbow
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: '#cbd5e1' }
+                            }
+                        }
+                    }
+                });
+                
+                // Update table
+                const tbody = document.querySelector('#platformTable tbody');
+                tbody.innerHTML = data.map(row => `
+                    <tr>
+                        <td><strong>${row.Platform}</strong></td>
+                        <td>₹${formatNumber(row.revenue)}</td>
+                        <td>${row.orders}</td>
+                        <td>₹${formatNumber(row.aov)}</td>
+                        <td>₹${formatNumber(row.net_revenue)}</td>
+                        <td><span class="badge ${row.avg_fee > 30 ? 'bg-danger' : 'bg-success'}">${row.avg_fee}%</span></td>
+                        <td>${row.countries}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Platforms error:', error);
+            }
+        }
+        
+        // Load insights
+        async function loadInsights() {
+            try {
+                const data = await fetchAPI('insights', state.filters);
+                
+                const container = document.getElementById('insightsContainer');
+                
+                if (!data || data.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-5">
+                            <h3>🤖 No Insights Available</h3>
+                            <p class="text-muted">Insights will appear when sufficient data is available</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = data.map(insight => `
+                    <div class="insight-card ${insight.type}">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div class="insight-title">${insight.title}</div>
+                            <span class="badge ${insight.impact === 'high' ? 'bg-danger' : insight.impact === 'positive' ? 'bg-success' : 'bg-warning'}">${insight.impact || 'INFO'}</span>
+                        </div>
+                        <p class="insight-message">${insight.message}</p>
+                        <div class="insight-action">💡 ${insight.action}</div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Insights error:', error);
+            }
+        }
+        
+        // Load forecast
+        async function loadForecast() {
+            try {
+                const data = await fetchAPI('forecast', { days: 7 });
+                
+                const ctx = document.getElementById('forecastChart');
+                
+                if (state.charts.forecast) {
+                    state.charts.forecast.destroy();
+                }
+                
+                state.charts.forecast = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.dates,
+                        datasets: [{
+                            label: 'Predicted Revenue',
+                            data: data.values,
+                            borderColor: COLORS.info,
+                            backgroundColor: COLORS.info + '20',
+                            fill: true,
+                            tension: 0.4,
+                            borderDash: [5, 5]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { color: '#cbd5e1' } }
+                        },
+                        scales: {
+                            y: {
+                                ticks: { color: '#cbd5e1' },
+                                grid: { color: '#334155' }
+                            },
+                            x: {
+                                ticks: { color: '#cbd5e1' },
+                                grid: { color: '#334155' }
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Forecast error:', error);
+            }
+        }
+        
+        // Export data
+        function exportData() {
+            const format = confirm('Export as Excel? (Cancel for CSV)') ? 'excel' : 'csv';
+            const params = new URLSearchParams(state.filters);
+            window.location.href = `/api/export/${format}?${params.toString()}`;
+            showToast('Export Started', `Downloading ${format.toUpperCase()} file...`, 'info');
+        }
+        
+        // Utility: Format number
+        function formatNumber(num) {
+            if (!num && num !== 0) return '0';
+            return new Intl.NumberFormat('en-IN', {
+                maximumFractionDigits: 0
+            }).format(num);
+        }
+        
+        // Utility: Show toast
+        function showToast(title, message, type) {
+            const container = document.querySelector('.toast-container');
+            const toastId = 'toast-' + Date.now();
+            
+            const bgClass = type === 'success' ? 'bg-success' : type === 'danger' ? 'bg-danger' : 'bg-info';
+            
+            const toastHtml = `
+                <div id="${toastId}" class="toast" role="alert">
+                    <div class="toast-header ${bgClass} text-white">
+                        <strong class="me-auto">${title}</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                    </div>
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                </div>
+            `;
+            
+            container.insertAdjacentHTML('beforeend', toastHtml);
+            
+            const toastElement = document.getElementById(toastId);
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+            
+            setTimeout(() => toastElement.remove(), 5000);
+        }
+        
+        // Auto-refresh every 5 minutes
+        setInterval(() => {
+            refreshData();
+            console.log('Auto-refresh at', new Date().toLocaleTimeString());
+        }, 300000);
+        
+        console.log('🎯 Aivellum Analytics Dashboard Loaded');
+        console.log('💡 Filters now work properly!');
+    </script>
+</body>
+</html>

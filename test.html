@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is Prompt Engineering? - Interactive Learning</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e27;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: slideDown 1s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: #a0aec0;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-20px); }
+            60% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        .content-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .text-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #cbd5e0;
+            margin-bottom: 30px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(102, 126, 234, 0.5);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .card-text {
+            color: #a0aec0;
+            line-height: 1.6;
+        }
+
+        .interactive-box {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 30px;
+            padding: 50px;
+            margin: 60px 0;
+            position: relative;
+        }
+
+        .demo-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #e2e8f0;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 18px 25px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .text-input::placeholder {
+            color: #718096;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        .output-box {
+            margin-top: 30px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 15px;
+            display: none;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .output-box.show {
+            display: block;
+        }
+
+        .output-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #a0aec0;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .output-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .comparison-section {
+            margin: 60px 0;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .prompt-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 35px;
+            position: relative;
+            border: 2px solid transparent;
+            transition: all 0.4s ease;
+        }
+
+        .prompt-card.bad {
+            border-color: rgba(245, 87, 108, 0.3);
+        }
+
+        .prompt-card.good {
+            border-color: rgba(72, 187, 120, 0.3);
+        }
+
+        .prompt-card:hover {
+            transform: scale(1.02);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .badge-bad {
+            background: rgba(245, 87, 108, 0.2);
+            color: #fc8181;
+        }
+
+        .badge-good {
+            background: rgba(72, 187, 120, 0.2);
+            color: #68d391;
+        }
+
+        .prompt-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+            font-style: italic;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+
+        .prompt-card.bad .prompt-text {
+            border-left-color: #fc8181;
+        }
+
+        .prompt-card.good .prompt-text {
+            border-left-color: #68d391;
+        }
+
+        .explanation {
+            font-size: 1rem;
+            color: #a0aec0;
+            line-height: 1.6;
+        }
+
+        .quiz-container {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(251, 191, 36, 0.1) 100%);
+            border: 2px solid rgba(245, 158, 11, 0.3);
+            border-radius: 30px;
+            padding: 50px;
+            margin: 60px 0;
+        }
+
+        .quiz-question {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #fbbf24;
+        }
+
+        .quiz-option {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            margin: 15px 0;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            color: #e2e8f0;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateX(10px);
+        }
+
+        .quiz-option.selected {
+            pointer-events: none;
+        }
+
+        .quiz-option.correct {
+            border-color: #68d391;
+            background: rgba(72, 187, 120, 0.2);
+        }
+
+        .quiz-option.incorrect {
+            border-color: #fc8181;
+            background: rgba(245, 87, 108, 0.2);
+        }
+
+        .quiz-feedback {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .quiz-feedback.correct {
+            background: rgba(72, 187, 120, 0.2);
+            border: 2px solid #68d391;
+            color: #68d391;
+        }
+
+        .quiz-feedback.incorrect {
+            background: rgba(245, 87, 108, 0.2);
+            border: 2px solid #fc8181;
+            color: #fc8181;
+        }
+
+        .principle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .principle-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .principle-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateX(10px);
+        }
+
+        .principle-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .principle-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .principle-desc {
+            color: #a0aec0;
+            line-height: 1.5;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.2) 0%, rgba(245, 87, 108, 0.2) 100%);
+            border: 2px solid rgba(240, 147, 251, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+
+        .typing-effect {
+            overflow: hidden;
+            border-right: 2px solid #667eea;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #667eea; }
+        }
+
+        .analogy-card {
+            background: linear-gradient(135deg, rgba(168, 237, 234, 0.1) 0%, rgba(254, 214, 227, 0.1) 100%);
+            border: 2px solid rgba(168, 237, 234, 0.3);
+            border-radius: 25px;
+            padding: 45px;
+            margin: 50px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analogy-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #a0aec0;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid,
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .interactive-box,
+            .quiz-container,
+            .demo-container {
+                padding: 30px 20px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <section class="hero">
+            <h1 class="hero-title">What is Prompt Engineering?</h1>
+            <p class="hero-subtitle">Master the Art of AI Communication</p>
+            <div class="scroll-indicator">
+                <svg width="30" height="50" viewBox="0 0 30 50">
+                    <rect x="5" y="5" width="20" height="35" rx="10" fill="none" stroke="#667eea" stroke-width="2"/>
+                    <circle cx="15" cy="15" r="3" fill="#667eea">
+                        <animate attributeName="cy" from="15" to="30" dur="1.5s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" from="1" to="0" dur="1.5s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">🎯 The Foundation</h2>
+            <p class="text-content">
+                Prompt engineering is the practice of designing and optimizing inputs (prompts) to get the best possible outputs from AI language models. It's the bridge between human intention and machine execution—a new form of communication that combines the precision of programming with the flexibility of natural language.
+            </p>
+            <p class="text-content">
+                Think of it this way: AI models like GPT, Claude, or Gemini are incredibly powerful tools, but they need clear instructions to perform at their best. Prompt engineering is about learning how to give those instructions effectively.
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">10x</div>
+                    <div class="stat-label">Better Output Quality</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">75%</div>
+                    <div class="stat-label">Fewer Iterations Needed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5x</div>
+                    <div class="stat-label">Cost Reduction</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Possibilities</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="analogy-card">
+                <div class="analogy-icon">🎬</div>
+                <h3 class="section-title" style="margin-bottom: 20px;">The Film Director Analogy</h3>
+                <p class="text-content">
+                    Prompt engineering is like being a film director. Just as a director guides actors with specific instructions, context, and creative vision to bring a scene to life, you guide AI with carefully crafted prompts to produce the exact output you need.
+                </p>
+                <p class="text-content" style="margin-bottom: 0;">
+                    A vague direction like "be sad" gets a generic performance. But "you just lost your childhood home to a fire, and you're holding the only photo that survived" creates something powerful and specific. The same principle applies to AI prompts.
+                </p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">🚀 Why It Matters</h2>
+            <div class="card-grid">
+                <div class="feature-card">
+                    <span class="card-icon">🎯</span>
+                    <h3 class="card-title">Precision</h3>
+                    <p class="card-text">Get exactly what you need on the first try. Well-crafted prompts eliminate ambiguity and reduce back-and-forth iterations.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="card-icon">⚡</span>
+                    <h3 class="card-title">Efficiency</h3>
+                    <p class="card-text">Save time and money by reducing the number of API calls and iterations needed to achieve your desired result.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="card-icon">🎨</span>
+                    <h3 class="card-title">Control</h3>
+                    <p class="card-text">Shape the AI's tone, style, format, and depth. Take full command of the output quality and structure.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="card-icon">🛡️</span>
+                    <h3 class="card-title">Safety</h3>
+                    <p class="card-text">Prevent hallucinations, bias, and inappropriate outputs through careful prompt construction and guardrails.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="card-icon">📊</span>
+                    <h3 class="card-title">Consistency</h3>
+                    <p class="card-text">Achieve reliable, reproducible results across multiple runs and use cases with standardized prompt templates.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="card-icon">💡</span>
+                    <h3 class="card-title">Creativity</h3>
+                    <p class="card-text">Unlock new possibilities and creative solutions by learning how to effectively leverage AI's capabilities.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">⚔️ Bad vs Good Prompts</h2>
+            <p class="text-content">The difference between a mediocre and exceptional AI output often comes down to prompt quality. Let's see real examples:</p>
+            
+            <div class="comparison-section">
+                <div class="comparison-grid">
+                    <div class="prompt-card bad">
+                        <span class="badge badge-bad">❌ Vague Prompt</span>
+                        <div class="prompt-text">"Tell me about dogs"</div>
+                        <div class="explanation">
+                            <strong>Problems:</strong>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>No specific focus or angle</li>
+                                <li>No target audience defined</li>
+                                <li>No format requirements</li>
+                                <li>Could result in any generic information</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="prompt-card good">
+                        <span class="badge badge-good">✅ Optimized Prompt</span>
+                        <div class="prompt-text">"As a veterinarian, explain the top 3 health considerations for first-time owners adopting a senior dog (8+ years). Focus on: 1) Common age-related conditions, 2) Expected veterinary costs, 3) Lifestyle adjustments. Format as bullet points, 150 words max."</div>
+                        <div class="explanation">
+                            <strong>Why it works:</strong>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>Assigns expert role (veterinarian)</li>
+                                <li>Specific topic (senior dog adoption)</li>
+                                <li>Clear structure (3 focus areas)</li>
+                                <li>Defined audience (first-time owners)</li>
+                                <li>Format specified (bullets, word limit)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-grid" style="margin-top: 40px;">
+                    <div class="prompt-card bad">
+                        <span class="badge badge-bad">❌ Vague Prompt</span>
+                        <div class="prompt-text">"Write some code"</div>
+                        <div class="explanation">
+                            <strong>Problems:</strong>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>No programming language specified</li>
+                                <li>No functionality described</li>
+                                <li>No context or use case</li>
+                                <li>No code quality requirements</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="prompt-card good">
+                        <span class="badge badge-good">✅ Optimized Prompt</span>
+                        <div class="prompt-text">"Write a Python function that validates email addresses using regex. Requirements: 1) Handle common edge cases (subdomains, plus addressing), 2) Return boolean, 3) Include type hints and docstring, 4) Add 3 test cases. Compatible with Python 3.8+."</div>
+                        <div class="explanation">
+                            <strong>Why it works:</strong>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>Language specified (Python)</li>
+                                <li>Clear functionality (email validation)</li>
+                                <li>Technical requirements listed</li>
+                                <li>Quality standards (docs, tests, type hints)</li>
+                                <li>Version compatibility noted</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">🎓 Core Principles</h2>
+            <div class="principle-grid">
+                <div class="principle-item">
+                    <div class="principle-number">01</div>
+                    <div class="principle-title">Clarity</div>
+                    <div class="principle-desc">Be explicit and unambiguous. Remove any room for misinterpretation.</div>
+                </div>
+                <div class="principle-item">
+                    <div class="principle-number">02</div>
+                    <div class="principle-title">Context</div>
+                    <div class="principle-desc">Provide relevant background information. Set the scene for the AI.</div>
+                </div>
+                <div class="principle-item">
+                    <div class="principle-number">03</div>
+                    <div class="principle-title">Specificity</div>
+                    <div class="principle-desc">Define exactly what you want. Include format, length, and style requirements.</div>
+                </div>
+                <div class="principle-item">
+                    <div class="principle-number">04</div>
+                    <div class="principle-title">Structure</div>
+                    <div class="principle-desc">Organize information logically. Use formatting to guide the AI's understanding.</div>
+                </div>
+                <div class="principle-item">
+                    <div class="principle-number">05</div>
+                    <div class="principle-title">Examples</div>
+                    <div class="principle-desc">Show, don't just tell. Provide examples of desired outputs when possible.</div>
+                </div>
+                <div class="principle-item">
+                    <div class="principle-number">06</div>
+                    <div class="principle-title">Iteration</div>
+                    <div class="principle-desc">Refine based on results. Prompt engineering is an iterative process.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="interactive-box">
+                <h2 class="section-title">🎮 Interactive Prompt Lab</h2>
+                <p class="text-content">Enter your vague prompt below, and watch how we transform it into a powerful, effective prompt:</p>
+                
+                <div class="demo-container">
+                    <div class="input-group">
+                        <label class="input-label">Your Prompt:</label>
+                        <input type="text" class="text-input" id="userPrompt" placeholder="e.g., 'write about climate change'">
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="improvePrompt()">✨ Transform My Prompt</button>
+                    
+                    <div class="output-box" id="outputBox">
+                        <div class="output-label">🔴 Original (Vague):</div>
+                        <div class="output-text" id="originalPrompt"></div>
+                        
+                        <div class="output-label">🟢 Improved (Optimized):</div>
+                        <div class="output-text" id="improvedPrompt"></div>
+                        
+                        <div class="output-label">💡 What Changed:</div>
+                        <div class="output-text" id="explanation"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="quiz-container">
+                <h2 class="section-title" style="color: #fbbf24; margin-bottom: 30px;">🧠 Knowledge Check</h2>
+                <div class="quiz-question">Which prompt demonstrates effective prompt engineering principles?</div>
+                
+                <div class="quiz-option" onclick="checkAnswer(this, false)">
+                    <strong>A)</strong> "Make it better"
+                </div>
+                
+                <div class="quiz-option" onclick="checkAnswer(this, false)">
+                    <strong>B)</strong> "Help me with this"
+                </div>
+                
+                <div class="quiz-option" onclick="checkAnswer(this, true)">
+                    <strong>C)</strong> "Rewrite this email in a professional yet friendly tone, keeping it under 150 words. Remove jargon and focus on the key message about the project deadline extension."
+                </div>
+                
+                <div class="quiz-option" onclick="checkAnswer(this, false)">
+                    <strong>D)</strong> "Do something cool"
+                </div>
+                
+                <div class="quiz-feedback" id="quizFeedback"></div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="highlight-box">
+                <h2 class="section-title" style="margin-bottom: 25px;">🎯 Key Takeaways</h2>
+                <div class="text-content" style="margin-bottom: 15px;">
+                    <strong>✓</strong> Prompt engineering is the skill of crafting effective instructions for AI models
+                </div>
+                <div class="text-content" style="margin-bottom: 15px;">
+                    <strong>✓</strong> Good prompts are clear, specific, contextual, and structured
+                </div>
+                <div class="text-content" style="margin-bottom: 15px;">
+                    <strong>✓</strong> Quality prompts dramatically improve output accuracy and reduce iterations
+                </div>
+                <div class="text-content" style="margin-bottom: 15px;">
+                    <strong>✓</strong> It's an iterative skill that improves with practice and experimentation
+                </div>
+                <div class="text-content" style="margin-bottom: 0;">
+                    <strong>✓</strong> Mastering this skill unlocks the full potential of AI language models
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" style="padding-bottom: 100px;">
+            <h2 class="section-title">🚀 What's Next?</h2>
+            <p class="text-content">
+                Now that you understand the fundamentals of prompt engineering, you're ready to dive deeper into the technical aspects:
+            </p>
+            <div class="card-grid" style="margin-top: 40px;">
+                <div class="feature-card">
+                    <span class="card-icon">🧠</span>
+                    <h3 class="card-title">Understanding LLMs</h3>
+                    <p class="card-text">Learn how large language models actually process and interpret your prompts under the hood.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="card-icon">⚙️</span>
+                    <h3 class="card-title">Technical Mechanics</h3>
+                    <p class="card-text">Explore tokens, context windows, temperature settings, and other parameters that affect outputs.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="card-icon">📚</span>
+                    <h3 class="card-title">Advanced Techniques</h3>
+                    <p class="card-text">Master chain-of-thought, few-shot learning, and other sophisticated prompting strategies.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Create animated star field
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.opacity = Math.random() * 0.5 + 0.3;
+                starsContainer.appendChild(star);
+            }
+        }
+
+        createStars();
+
+        // Prompt improvement logic
+        const promptDatabase = {
+            'climate': {
+                original: 'write about climate change',
+                improved: 'Write a 300-word article explaining the top 3 human activities contributing to climate change in 2024. Target audience: high school students. Include: 1) Specific data/statistics, 2) One real-world example per activity, 3) A brief actionable solution for each. Tone: informative but hopeful. Format: intro paragraph + 3 sections with headers + conclusion.',
+                explanation: 'Added specific word count, target audience, structure (3 activities), data requirements, tone guidance, and clear formatting instructions. Transformed vague request into actionable brief.'
+            },
+            'code': {
+                original: 'write some code',
+                improved: 'Create a JavaScript function called "debounce" that: 1) Delays callback execution until after specified milliseconds have elapsed since last call, 2) Accepts function and delay as parameters, 3) Returns a new debounced function, 4) Includes JSDoc comments with usage example, 5) Handles edge case of immediate parameter. Target: ES6+ syntax.',
+                explanation: 'Specified language (JavaScript), exact functionality (debounce), parameters, return value, documentation requirements, edge cases, and syntax version. No ambiguity remains.'
+            },
+            'email': {
+                original: 'write an email',
+                improved: 'Draft a professional email to a client explaining a project delay. Context: Website launch delayed by 2 weeks due to third-party API issues. Tone: apologetic but confident. Include: 1) Clear explanation without technical jargon, 2) New timeline with specific date, 3) Compensation offer (10% discount), 4) Call-to-action for approval. Length: 150-200 words. Format: greeting + 3 paragraphs + signature.',
+                explanation: 'Added complete context, specific tone, structured content requirements, word count, and formatting. Client will receive exactly the right message.'
+            },
+            'recipe': {
+                original: 'give me a recipe',
+                improved: 'Create a vegetarian dinner recipe for 4 people. Requirements: 1) Under 30 minutes total time, 2) Uses only common pantry staples (no specialty items), 3) High protein (20g+ per serving), 4) Budget-friendly (under $15 total). Format: Ingredient list with measurements, numbered step-by-step instructions, prep/cook time breakdown, nutritional info per serving, and 2 possible substitutions.',
+                explanation: 'Specified dietary type, serving size, time constraint, ingredient limitations, nutritional goal, budget, and detailed formatting requirements. Recipe will be practical and usable.'
+            },
+            'story': {
+                original: 'write a story',
+                improved: 'Write a 500-word short story in the style of Ray Bradbury. Genre: Science fiction. Theme: The cost of technological convenience. Setting: Mars colony, year 2145. Main character: A botanist who discovers something unsettling about the colony\'s food source. Tone: Atmospheric and slightly unsettling. POV: Third person limited. Include: Vivid sensory details, one plot twist, and an ambiguous ending.',
+                explanation: 'Added specific author style, genre, theme, setting details, character role, tone, POV, word count, and story elements. Writer has complete creative brief.'
+            },
+            'default': {
+                original: 'your vague prompt',
+                improved: 'Your improved prompt would include: 1) Specific role/expertise needed, 2) Clear context and background, 3) Exact deliverable with format, 4) Target audience, 5) Constraints (length, tone, style), 6) Examples if applicable, 7) Success criteria.',
+                explanation: 'Effective prompts answer WHO (audience/role), WHAT (exact output), WHY (purpose/context), HOW (format/style/tone), WHEN (timeframe if relevant), and WHERE (platform/medium if applicable). Every specification removes ambiguity and improves results.'
+            }
+        };
+
+        function improvePrompt() {
+            const input = document.getElementById('userPrompt').value.toLowerCase().trim();
+            const outputBox = document.getElementById('outputBox');
+            
+            if (!input) {
+                alert('Please enter a prompt first!');
+                return;
+            }
+
+            let promptData;
+            
+            if (input.includes('climate') || input.includes('environment') || input.includes('warming')) {
+                promptData = promptDatabase['climate'];
+            } else if (input.includes('code') || input.includes('program') || input.includes('function')) {
+                promptData = promptDatabase['code'];
+            } else if (input.includes('email') || input.includes('message') || input.includes('letter')) {
+                promptData = promptDatabase['email'];
+            } else if (input.includes('recipe') || input.includes('cook') || input.includes('food') || input.includes('meal')) {
+                promptData = promptDatabase['recipe'];
+            } else if (input.includes('story') || input.includes('narrative') || input.includes('tale') || input.includes('fiction')) {
+                promptData = promptDatabase['story'];
+            } else {
+                promptData = promptDatabase['default'];
+            }
+
+            document.getElementById('originalPrompt').innerHTML = `"${input}"`;
+            document.getElementById('improvedPrompt').innerHTML = `"${promptData.improved}"`;
+            document.getElementById('explanation').innerHTML = `<strong>Key Improvements:</strong><br>${promptData.explanation}`;
+            
+            outputBox.classList.add('show');
+            outputBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Quiz functionality
+        let quizAnswered = false;
+
+        function checkAnswer(element, isCorrect) {
+            if (quizAnswered) return;
+            
+            quizAnswered = true;
+            const feedback = document.getElementById('quizFeedback');
+            const allOptions = document.querySelectorAll('.quiz-option');
+            
+            allOptions.forEach(opt => opt.classList.add('selected'));
+            
+            if (isCorrect) {
+                element.classList.add('correct');
+                feedback.innerHTML = '<strong>🎉 Excellent!</strong><br><br>Option C demonstrates all key principles: It\'s specific (rewrite this email), defines tone (professional yet friendly), sets constraints (under 150 words), provides clear objectives (remove jargon, focus on key message), and gives context (project deadline extension). This prompt would produce a consistently high-quality result.';
+                feedback.classList.add('show', 'correct');
+            } else {
+                element.classList.add('incorrect');
+                
+                allOptions.forEach((opt, idx) => {
+                    if (idx === 2) {
+                        opt.classList.add('correct');
+                    }
+                });
+                
+                feedback.innerHTML = '<strong>❌ Not quite!</strong><br><br>The correct answer is C. Options A, B, and D are all too vague to produce quality results. Option C includes specific instructions, constraints, tone guidance, and clear objectives—all essential elements of effective prompt engineering. Notice how it removes all ambiguity about what the output should contain.';
+                feedback.classList.add('show', 'incorrect');
+            }
+            
+            feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Enter key support for prompt input
+        document.getElementById('userPrompt').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                improvePrompt();
+            }
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Add intersection observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .prompt-card, .principle-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,845 @@
+2025-10-27 15:30:39,882 INFO: Loaded 25 raw records
+2025-10-27 15:30:39,893 INFO: After date filtering: 25 records
+2025-10-27 15:30:39,925 INFO: Processing complete: 25 records
+2025-10-27 15:30:39,926 INFO: Countries found: ['United States', 'United Kingdom', 'Finland', 'Ecuador', 'South Korea', 'Nigeria', 'India', 'Australia', 'Germany', 'Pakistan', 'South Africa', 'UAE']
+2025-10-27 15:30:56,368 INFO: After country filter: 4 records
+2025-10-27 15:30:56,713 INFO: After country filter: 4 records
+2025-10-27 15:30:56,715 INFO: After country filter: 4 records
+2025-10-27 15:30:56,716 INFO: After country filter: 4 records
+2025-10-27 15:31:22,306 INFO: After country filter: 4 records
+2025-10-27 15:31:26,303 INFO: After country filter: 4 records
+2025-10-27 15:31:28,399 INFO: After country filter: 4 records
+2025-10-27 15:33:32,503 INFO: Loaded 25 raw records
+2025-10-27 15:33:32,512 INFO: After date filtering: 25 records
+2025-10-27 15:33:32,533 INFO: Processing complete: 25 records
+2025-10-27 15:33:32,534 INFO: Countries found: ['United States', 'United Kingdom', 'Finland', 'Ecuador', 'South Korea', 'Nigeria', 'Australia', 'Germany', 'Pakistan', 'India', 'South Africa', 'UAE']
+2025-10-27 19:21:08,638 INFO: Loaded 26 raw records
+2025-10-27 19:21:08,645 INFO: After date filtering: 26 records
+2025-10-27 19:21:08,664 INFO: Processing complete: 26 records
+2025-10-27 19:21:08,665 INFO: Countries found: ['United States', 'United Kingdom', 'Finland', 'Ecuador', 'South Korea', 'Nigeria', 'Australia', 'Germany', 'Pakistan', 'India', 'South Africa', 'UAE']
+2025-10-27 19:21:32,129 INFO: After platform filter: 21 records
+2025-10-27 19:21:32,154 INFO: After platform filter: 21 records
+2025-10-27 19:21:32,161 INFO: After platform filter: 21 records
+2025-10-27 19:21:32,195 INFO: After platform filter: 21 records
+2025-10-27 19:21:38,217 INFO: After platform filter: 5 records
+2025-10-27 19:21:38,243 INFO: After platform filter: 5 records
+2025-10-27 19:21:38,251 INFO: After platform filter: 5 records
+2025-10-27 19:21:38,260 INFO: After platform filter: 5 records
+2025-10-27 19:21:44,646 INFO: After platform filter: 21 records
+2025-10-27 19:21:44,676 INFO: After platform filter: 21 records
+2025-10-27 19:21:44,683 INFO: After platform filter: 21 records
+2025-10-27 19:21:44,688 INFO: After platform filter: 21 records
+2025-10-27 20:19:47,190 INFO: Loaded 26 raw records
+2025-10-27 20:19:47,202 INFO: After date filtering: 26 records
+2025-10-27 20:19:47,239 INFO: Processing complete: 26 records
+2025-10-27 20:19:47,241 INFO: Countries found: ['United States', 'United Kingdom', 'Finland', 'Ecuador', 'South Korea', 'Nigeria', 'Australia', 'Germany', 'Pakistan', 'India', 'South Africa', 'UAE']
+2025-10-28 08:05:36,592 INFO: Loaded 28 raw records
+2025-10-28 08:05:36,620 INFO: After date filtering: 28 records
+2025-10-28 08:05:36,679 INFO: Processing complete: 28 records
+2025-10-28 08:05:36,682 INFO: Countries found: ['United States', 'United Kingdom', 'Finland', 'Ecuador', 'South Korea', 'Nigeria', 'Australia', 'Germany', 'Pakistan', 'India', 'South Africa', 'UAE', 'Unknown']
+2025-10-28 08:54:30,601 INFO: Loading: Aivellum_Sales.xlsx
+2025-10-28 08:54:36,329 INFO: Loaded 29 raw records
+2025-10-28 08:54:36,358 INFO: After date filtering: 29 records
+2025-10-28 08:54:36,471 INFO: Processing complete: 29 records
+2025-10-28 08:54:36,474 INFO: Countries found: 9 - ['United States', 'United Kingdom', 'Finland', 'Ecuador', 'South Korea', 'Australia', 'Pakistan', 'South Africa', 'Czech Republic']
+2025-10-28 08:54:36,476 INFO: Currencies: ['USD', 'GBP', 'AUD', 'NGN', 'CZK']
+2025-10-28 08:54:46,007 ERROR: KPI error: Object of type int64 is not JSON serializable
+2025-10-28 08:54:46,117 ERROR: Traceback (most recent call last):
+  File "d:\AivellumPro\zReport5\app.py", line 653, in api_kpis
+    return jsonify({'success': True, 'data': {'kpis': kpis}})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\json\__init__.py", line 170, in jsonify
+    return current_app.json.response(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\json\provider.py", line 215, in response
+    f"{self.dumps(obj, **dump_args)}\n", mimetype=self.mimetype
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\json\provider.py", line 180, in dumps
+    return json.dumps(obj, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\json\provider.py", line 120, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type int64 is not JSON serializable
+
+2025-10-28 08:56:03,873 ERROR: KPI error: Object of type int64 is not JSON serializable
+2025-10-28 08:56:03,875 ERROR: Traceback (most recent call last):
+  File "d:\AivellumPro\zReport5\app.py", line 653, in api_kpis
+    return jsonify({'success': True, 'data': {'kpis': kpis}})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\json\__init__.py", line 170, in jsonify
+    return current_app.json.response(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\json\provider.py", line 215, in response
+    f"{self.dumps(obj, **dump_args)}\n", mimetype=self.mimetype
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\json\provider.py", line 180, in dumps
+    return json.dumps(obj, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\json\provider.py", line 120, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type int64 is not JSON serializable
+
+2025-10-28 08:56:26,452 INFO: Loaded 29 raw records
+2025-10-28 08:56:26,462 INFO: After date filtering: 29 records
+2025-10-28 08:56:26,487 INFO: Processing complete: 29 records
+2025-10-28 08:56:26,490 INFO: Countries found: ['United States', 'United Kingdom', 'Finland', 'Ecuador', 'South Korea', 'Nigeria', 'Australia', 'Germany', 'Pakistan', 'India', 'South Africa', 'UAE', 'Unknown']
+2025-10-28 08:59:34,001 INFO: Loaded 29 raw records
+2025-10-28 08:59:34,009 INFO: After date filtering: 29 records
+2025-10-28 08:59:34,035 INFO: Processing complete: 29 records
+2025-10-28 08:59:34,037 INFO: Countries found: ['United States', 'United Kingdom', 'Finland', 'Ecuador', 'South Korea', 'Nigeria', 'Australia', 'Germany', 'Pakistan', 'India', 'South Africa', 'UAE', 'Unknown']
+2025-10-28 09:26:04,771 INFO: Loaded 29 raw records
+2025-10-28 09:26:04,776 INFO: After date filtering: 29 records
+2025-10-28 09:26:04,791 INFO: Processing complete: 29 records
+2025-10-28 09:26:04,794 INFO: Countries found: ['United States', 'United Kingdom', 'Finland', 'Ecuador', 'South Korea', 'Nigeria', 'Australia', 'Germany', 'Pakistan', 'India', 'South Africa', 'UAE', 'Unknown']
+2025-10-28 09:33:18,408 INFO: Loading data from: Aivellum_Sales.xlsx
+2025-10-28 09:33:18,698 INFO: Loaded 29 raw records
+2025-10-28 09:33:18,699 INFO: Columns: ['S.NO', 'Date', 'Time', 'Purchase ID', 'Platform', 'For (Users)', 'Billing Address', 'Total Amount payed buy user', 'List Price', 'Taxn (toal amount - list price)', 'Net amount with deductions']
+2025-10-28 09:33:18,705 INFO: After date filtering: 29 records
+2025-10-28 09:33:18,712 INFO: Processing amounts...
+2025-10-28 09:33:18,727 INFO: Processing net amounts...
+2025-10-28 09:33:18,731 INFO: Extracting countries...
+2025-10-28 09:33:18,732 INFO: Extracting country from: 66062, KS, US
+2025-10-28 09:33:18,733 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:33:18,734 INFO: Extracting country from: S75 1HJ, GB
+2025-10-28 09:33:18,734 INFO:   -> Matched 'GB' -> United Kingdom
+2025-10-28 09:33:18,735 INFO: Extracting country from: 37221, TN, US
+2025-10-28 09:33:18,735 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:33:18,736 INFO: Extracting country from: DA1 3AG, GB
+2025-10-28 09:33:18,736 INFO:   -> Matched 'GB' -> United Kingdom
+2025-10-28 09:33:18,737 INFO: Extracting country from: 91940, FI
+2025-10-28 09:33:18,737 INFO:   -> Matched 'FI' -> Finland
+2025-10-28 09:33:18,738 INFO: Extracting country from: 170306, EC
+2025-10-28 09:33:18,739 INFO:   -> Matched 'EC' -> Ecuador
+2025-10-28 09:33:18,740 INFO: Extracting country from: 02908, RI, US
+2025-10-28 09:33:18,740 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:33:18,795 INFO:   -> Matched 'KR' -> South Korea
+2025-10-28 09:33:18,796 INFO: Extracting country from: 89410, NV, US
+2025-10-28 09:33:18,797 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:33:18,797 INFO: Extracting country from: HUNGARY
+2025-10-28 09:33:18,797 INFO:   -> Matched 'HUNGARY' -> Hungary
+2025-10-28 09:33:18,798 INFO: Extracting country from: AUSTRALIA
+2025-10-28 09:33:18,798 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:33:18,799 INFO: Extracting country from: AU
+2025-10-28 09:33:18,799 INFO:   -> Matched 'AU' -> Australia
+2025-10-28 09:33:18,799 INFO: Extracting country from: 09217, DE
+2025-10-28 09:33:18,800 INFO:   -> Matched 'DE' -> Germany
+2025-10-28 09:33:18,800 INFO: Extracting country from: 54000, PK
+2025-10-28 09:33:18,801 INFO:   -> Matched 'PK' -> Pakistan
+2025-10-28 09:33:18,801 INFO: Extracting country from: UNITED STATES
+2025-10-28 09:33:18,802 INFO:   -> Matched 'UNITED STATES' -> United States
+2025-10-28 09:33:18,803 INFO: Extracting country from: UNITED STATES
+2025-10-28 09:33:18,803 INFO:   -> Matched 'UNITED STATES' -> United States
+2025-10-28 09:33:18,804 INFO: Extracting country from: 520261, AKWA IBOM, NG
+2025-10-28 09:33:18,804 INFO:   -> Matched 'WA' -> Australia
+2025-10-28 09:33:18,805 INFO: Extracting country from: JAMMU AND KASHMIR, IN
+2025-10-28 09:33:18,805 INFO:   -> Matched 'IN' -> India
+2025-10-28 09:33:18,805 INFO: Extracting country from: 92105, CA, US
+2025-10-28 09:33:18,806 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:33:18,806 INFO: Extracting country from: 2740, ZA
+2025-10-28 09:33:18,807 INFO:   -> Matched 'ZA' -> South Africa
+2025-10-28 09:33:18,809 INFO: Extracting country from: 382421, GUJARAT, IN
+2025-10-28 09:33:18,810 INFO:   -> Matched 'IN' -> India
+2025-10-28 09:33:18,810 INFO: Extracting country from: 70072, LA, US
+2025-10-28 09:33:18,811 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:33:18,812 INFO: Extracting country from: 711301, WEST BENGAL, IN
+2025-10-28 09:33:18,812 INFO:   -> Matched 'IN' -> India
+2025-10-28 09:33:18,813 INFO: Extracting country from: UNITED ARAB EMIRATES
+2025-10-28 09:33:18,813 INFO:   -> Matched 'ES' -> Spain
+2025-10-28 09:33:18,814 INFO: Extracting country from: 27610, NC, US
+2025-10-28 09:33:18,814 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:33:18,815 INFO: Extracting country from: UNITED STATES
+2025-10-28 09:33:18,815 INFO:   -> Matched 'UNITED STATES' -> United States
+2025-10-28 09:33:18,816 INFO: Extracting country from: 09130, DE
+2025-10-28 09:33:18,816 INFO:   -> Matched 'DE' -> Germany
+2025-10-28 09:33:18,817 INFO: Extracting country from: 43981, CZ
+2025-10-28 09:33:18,817 INFO:   -> Matched 'CZ' -> Czech Republic
+2025-10-28 09:33:18,818 INFO: Extracting country from: UNITED STATES
+2025-10-28 09:33:18,818 INFO:   -> Matched 'UNITED STATES' -> United States
+2025-10-28 09:33:18,822 INFO: Country distribution:
+Country
+United States     12
+India              3
+United Kingdom     2
+Australia          2
+Germany            2
+Finland            1
+Ecuador            1
+South Korea        1
+Hungary            1
+Pakistan           1
+South Africa       1
+Spain              1
+Czech Republic     1
+2025-10-28 09:33:18,825 INFO: Processing complete: 29 records
+2025-10-28 09:33:18,826 INFO: Countries found: 13
+2025-10-28 09:33:18,827 INFO: Currencies found: 6
+2025-10-28 09:35:47,285 INFO: Loading data from: Aivellum_Sales.xlsx
+2025-10-28 09:35:47,539 INFO: Loaded 29 raw records
+2025-10-28 09:35:47,540 INFO: Columns: ['S.NO', 'Date', 'Time', 'Purchase ID', 'Platform', 'For (Users)', 'Billing Address', 'Total Amount payed buy user', 'List Price', 'Taxn (toal amount - list price)', 'Net amount with deductions']
+2025-10-28 09:35:47,547 INFO: After date filtering: 29 records
+2025-10-28 09:35:47,551 INFO: Processing amounts...
+2025-10-28 09:35:47,567 INFO: Processing net amounts...
+2025-10-28 09:35:47,569 INFO: Extracting countries...
+2025-10-28 09:35:47,570 INFO: Extracting country from: 66062, KS, US
+2025-10-28 09:35:47,573 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:35:47,574 INFO: Extracting country from: S75 1HJ, GB
+2025-10-28 09:35:47,575 INFO:   -> Matched 'GB' -> United Kingdom
+2025-10-28 09:35:47,576 INFO: Extracting country from: 37221, TN, US
+2025-10-28 09:35:47,577 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:35:47,578 INFO: Extracting country from: DA1 3AG, GB
+2025-10-28 09:35:47,578 INFO:   -> Matched 'GB' -> United Kingdom
+2025-10-28 09:35:47,579 INFO: Extracting country from: 91940, FI
+2025-10-28 09:35:47,579 INFO:   -> Matched 'FI' -> Finland
+2025-10-28 09:35:47,580 INFO: Extracting country from: 170306, EC
+2025-10-28 09:35:47,580 INFO:   -> Matched 'EC' -> Ecuador
+2025-10-28 09:35:47,581 INFO: Extracting country from: 02908, RI, US
+2025-10-28 09:35:47,582 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:35:47,592 INFO:   -> Matched 'KR' -> South Korea
+2025-10-28 09:35:47,593 INFO: Extracting country from: 89410, NV, US
+2025-10-28 09:35:47,594 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:35:47,594 INFO: Extracting country from: HUNGARY
+2025-10-28 09:35:47,595 INFO:   -> Matched 'HUNGARY' -> Hungary
+2025-10-28 09:35:47,595 INFO: Extracting country from: AUSTRALIA
+2025-10-28 09:35:47,596 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:35:47,597 INFO: Extracting country from: AU
+2025-10-28 09:35:47,597 INFO:   -> Matched 'AU' -> Australia
+2025-10-28 09:35:47,597 INFO: Extracting country from: 09217, DE
+2025-10-28 09:35:47,598 INFO:   -> Matched 'DE' -> Germany
+2025-10-28 09:35:47,599 INFO: Extracting country from: 54000, PK
+2025-10-28 09:35:47,600 INFO:   -> Matched 'PK' -> Pakistan
+2025-10-28 09:35:47,600 INFO: Extracting country from: UNITED STATES
+2025-10-28 09:35:47,601 INFO:   -> Matched 'UNITED STATES' -> United States
+2025-10-28 09:35:47,601 INFO: Extracting country from: UNITED STATES
+2025-10-28 09:35:47,602 INFO:   -> Matched 'UNITED STATES' -> United States
+2025-10-28 09:35:47,602 INFO: Extracting country from: 520261, AKWA IBOM, NG
+2025-10-28 09:35:47,603 INFO:   -> Matched 'WA' -> Australia
+2025-10-28 09:35:47,605 INFO: Extracting country from: JAMMU AND KASHMIR, IN
+2025-10-28 09:35:47,606 INFO:   -> Matched 'IN' -> India
+2025-10-28 09:35:47,606 INFO: Extracting country from: 92105, CA, US
+2025-10-28 09:35:47,607 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:35:47,607 INFO: Extracting country from: 2740, ZA
+2025-10-28 09:35:47,608 INFO:   -> Matched 'ZA' -> South Africa
+2025-10-28 09:35:47,608 INFO: Extracting country from: 382421, GUJARAT, IN
+2025-10-28 09:35:47,609 INFO:   -> Matched 'IN' -> India
+2025-10-28 09:35:47,609 INFO: Extracting country from: 70072, LA, US
+2025-10-28 09:35:47,609 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:35:47,610 INFO: Extracting country from: 711301, WEST BENGAL, IN
+2025-10-28 09:35:47,610 INFO:   -> Matched 'IN' -> India
+2025-10-28 09:35:47,610 INFO: Extracting country from: UNITED ARAB EMIRATES
+2025-10-28 09:35:47,611 INFO:   -> Matched 'ES' -> Spain
+2025-10-28 09:35:47,611 INFO: Extracting country from: 27610, NC, US
+2025-10-28 09:35:47,611 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:35:47,611 INFO: Extracting country from: UNITED STATES
+2025-10-28 09:35:47,612 INFO:   -> Matched 'UNITED STATES' -> United States
+2025-10-28 09:35:47,612 INFO: Extracting country from: 09130, DE
+2025-10-28 09:35:47,613 INFO:   -> Matched 'DE' -> Germany
+2025-10-28 09:35:47,613 INFO: Extracting country from: 43981, CZ
+2025-10-28 09:35:47,613 INFO:   -> Matched 'CZ' -> Czech Republic
+2025-10-28 09:35:47,614 INFO: Extracting country from: UNITED STATES
+2025-10-28 09:35:47,614 INFO:   -> Matched 'UNITED STATES' -> United States
+2025-10-28 09:35:47,615 INFO: Country distribution:
+Country
+United States     12
+India              3
+United Kingdom     2
+Australia          2
+Germany            2
+Finland            1
+Ecuador            1
+South Korea        1
+Hungary            1
+Pakistan           1
+South Africa       1
+Spain              1
+Czech Republic     1
+2025-10-28 09:35:47,617 INFO: Processing complete: 29 records
+2025-10-28 09:35:47,617 INFO: Countries found: 13
+2025-10-28 09:35:47,618 INFO: Currencies found: 6
+2025-10-28 09:36:13,587 INFO: Loading data from: Aivellum_Sales.xlsx
+2025-10-28 09:36:13,946 INFO: Loaded 29 raw records
+2025-10-28 09:36:13,947 INFO: Columns: ['S.NO', 'Date', 'Time', 'Purchase ID', 'Platform', 'For (Users)', 'Billing Address', 'Total Amount payed buy user', 'List Price', 'Taxn (toal amount - list price)', 'Net amount with deductions']
+2025-10-28 09:36:13,957 INFO: After date filtering: 29 records
+2025-10-28 09:36:13,963 INFO: Processing amounts...
+2025-10-28 09:36:13,973 INFO: Processing net amounts...
+2025-10-28 09:36:13,975 INFO: Extracting countries...
+2025-10-28 09:36:13,976 INFO: Extracting country from: 66062, KS, US
+2025-10-28 09:36:13,977 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:36:13,977 INFO: Extracting country from: S75 1HJ, GB
+2025-10-28 09:36:13,977 INFO:   -> Matched 'GB' -> United Kingdom
+2025-10-28 09:36:13,978 INFO: Extracting country from: 37221, TN, US
+2025-10-28 09:36:13,978 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:36:13,978 INFO: Extracting country from: DA1 3AG, GB
+2025-10-28 09:36:13,979 INFO:   -> Matched 'GB' -> United Kingdom
+2025-10-28 09:36:13,979 INFO: Extracting country from: 91940, FI
+2025-10-28 09:36:13,980 INFO:   -> Matched 'FI' -> Finland
+2025-10-28 09:36:13,980 INFO: Extracting country from: 170306, EC
+2025-10-28 09:36:13,981 INFO:   -> Matched 'EC' -> Ecuador
+2025-10-28 09:36:13,981 INFO: Extracting country from: 02908, RI, US
+2025-10-28 09:36:13,981 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:36:13,988 INFO:   -> Matched 'KR' -> South Korea
+2025-10-28 09:36:13,988 INFO: Extracting country from: 89410, NV, US
+2025-10-28 09:36:13,989 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:36:13,989 INFO: Extracting country from: HUNGARY
+2025-10-28 09:36:13,990 INFO:   -> Matched 'HUNGARY' -> Hungary
+2025-10-28 09:36:13,990 INFO: Extracting country from: AUSTRALIA
+2025-10-28 09:36:13,991 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:36:13,991 INFO: Extracting country from: AU
+2025-10-28 09:36:13,992 INFO:   -> Matched 'AU' -> Australia
+2025-10-28 09:36:13,992 INFO: Extracting country from: 09217, DE
+2025-10-28 09:36:13,992 INFO:   -> Matched 'DE' -> Germany
+2025-10-28 09:36:13,993 INFO: Extracting country from: 54000, PK
+2025-10-28 09:36:13,993 INFO:   -> Matched 'PK' -> Pakistan
+2025-10-28 09:36:13,993 INFO: Extracting country from: UNITED STATES
+2025-10-28 09:36:13,994 INFO:   -> Matched 'UNITED STATES' -> United States
+2025-10-28 09:36:13,994 INFO: Extracting country from: UNITED STATES
+2025-10-28 09:36:13,995 INFO:   -> Matched 'UNITED STATES' -> United States
+2025-10-28 09:36:13,995 INFO: Extracting country from: 520261, AKWA IBOM, NG
+2025-10-28 09:36:13,995 INFO:   -> Matched 'WA' -> Australia
+2025-10-28 09:36:13,996 INFO: Extracting country from: JAMMU AND KASHMIR, IN
+2025-10-28 09:36:13,996 INFO:   -> Matched 'IN' -> India
+2025-10-28 09:36:13,996 INFO: Extracting country from: 92105, CA, US
+2025-10-28 09:36:13,997 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:36:13,997 INFO: Extracting country from: 2740, ZA
+2025-10-28 09:36:13,998 INFO:   -> Matched 'ZA' -> South Africa
+2025-10-28 09:36:13,999 INFO: Extracting country from: 382421, GUJARAT, IN
+2025-10-28 09:36:13,999 INFO:   -> Matched 'IN' -> India
+2025-10-28 09:36:14,000 INFO: Extracting country from: 70072, LA, US
+2025-10-28 09:36:14,001 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:36:14,002 INFO: Extracting country from: 711301, WEST BENGAL, IN
+2025-10-28 09:36:14,003 INFO:   -> Matched 'IN' -> India
+2025-10-28 09:36:14,003 INFO: Extracting country from: UNITED ARAB EMIRATES
+2025-10-28 09:36:14,004 INFO:   -> Matched 'ES' -> Spain
+2025-10-28 09:36:14,004 INFO: Extracting country from: 27610, NC, US
+2025-10-28 09:36:14,005 INFO:   -> Matched 'US' -> United States
+2025-10-28 09:36:14,005 INFO: Extracting country from: UNITED STATES
+2025-10-28 09:36:14,006 INFO:   -> Matched 'UNITED STATES' -> United States
+2025-10-28 09:36:14,006 INFO: Extracting country from: 09130, DE
+2025-10-28 09:36:14,006 INFO:   -> Matched 'DE' -> Germany
+2025-10-28 09:36:14,007 INFO: Extracting country from: 43981, CZ
+2025-10-28 09:36:14,007 INFO:   -> Matched 'CZ' -> Czech Republic
+2025-10-28 09:36:14,007 INFO: Extracting country from: UNITED STATES
+2025-10-28 09:36:14,008 INFO:   -> Matched 'UNITED STATES' -> United States
+2025-10-28 09:36:14,009 INFO: Country distribution:
+Country
+United States     12
+India              3
+United Kingdom     2
+Australia          2
+Germany            2
+Finland            1
+Ecuador            1
+South Korea        1
+Hungary            1
+Pakistan           1
+South Africa       1
+Spain              1
+Czech Republic     1
+2025-10-28 09:36:14,011 INFO: Processing complete: 29 records
+2025-10-28 09:36:14,012 INFO: Countries found: 13
+2025-10-28 09:36:14,013 INFO: Currencies found: 6
+2025-10-28 20:11:59,134 INFO: Loaded 29 raw records
+2025-10-28 20:11:59,144 INFO: After date filtering: 29 records
+2025-10-28 20:11:59,167 INFO: Processing complete: 29 records
+2025-10-28 20:11:59,168 INFO: Countries found: ['United States', 'United Kingdom', 'Finland', 'Ecuador', 'South Korea', 'Nigeria', 'Australia', 'Germany', 'Pakistan', 'India', 'South Africa', 'UAE', 'Unknown']
+2025-10-28 20:12:40,521 INFO: Loaded 29 raw records
+2025-10-28 20:12:40,527 INFO: After date filtering: 29 records
+2025-10-28 20:12:40,544 INFO: Processing complete: 29 records
+2025-10-28 20:12:40,547 INFO: Countries found: ['United States', 'United Kingdom', 'Finland', 'Ecuador', 'South Korea', 'Nigeria', 'Australia', 'Germany', 'Pakistan', 'India', 'South Africa', 'UAE', 'Unknown']
+2025-10-28 20:17:05,583 INFO: Loaded 29 raw records
+2025-10-28 20:17:05,590 INFO: After date filtering: 29 records
+2025-10-28 20:17:05,610 INFO: Processing complete: 29 records
+2025-10-28 20:17:05,611 INFO: Countries found: ['United States', 'Unknown', 'India']
+2025-10-28 20:27:51,330 INFO: Loaded 29 raw records
+2025-10-28 20:27:51,340 INFO: After date filtering: 29 records
+2025-10-28 20:27:51,365 INFO: Processing complete: 29 records
+2025-10-28 20:27:51,368 INFO: Countries found: ['United States', 'India', 'Ecuador', 'South Korea', 'Nigeria', 'Germany', 'Pakistan', 'Canada', 'UAE']
+2025-10-28 20:49:50,729 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-10-28 20:49:50,729 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-28 20:49:50,747 - INFO -  * Restarting with stat
+2025-10-28 20:49:51,529 - WARNING -  * Debugger is active!
+2025-10-28 20:49:51,540 - INFO -  * Debugger PIN: 479-772-392
+2025-10-28 20:50:48,589 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-10-28 20:50:48,590 - INFO - [33mPress CTRL+C to quit[0m
+2025-10-28 20:50:48,592 - INFO -  * Restarting with stat
+2025-10-28 20:50:49,414 - WARNING -  * Debugger is active!
+2025-10-28 20:50:49,421 - INFO -  * Debugger PIN: 479-772-392
+2025-10-28 20:51:27,355 INFO: Loaded 29 raw records
+2025-10-28 20:51:27,361 INFO: After date filtering: 29 records
+2025-10-28 20:51:27,376 INFO: Processing complete: 29 records
+2025-10-28 20:51:27,378 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Nigeria', 'Pakistan', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-10-28 20:51:27,379 INFO: Total unique countries: 14
+2025-10-28 20:59:45,686 INFO: Loaded 29 raw records
+2025-10-28 20:59:45,692 INFO: After date filtering: 29 records
+2025-10-28 20:59:45,711 INFO: Processing complete: 29 records
+2025-10-28 20:59:45,711 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Nigeria', 'Pakistan', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-10-28 20:59:45,713 INFO: Country counts: {'United States': 11, 'India': 3, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'South Africa': 1, 'United Arab Emirates': 1, 'Czech Republic': 1}
+2025-10-29 14:52:39,973 INFO: Loaded 29 raw records
+2025-10-29 14:52:39,993 INFO: After date filtering: 29 records
+2025-10-29 14:52:40,150 INFO: Processing complete: 29 records
+2025-10-29 14:52:40,152 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Nigeria', 'Pakistan', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-10-29 14:52:40,156 INFO: Country counts: {'United States': 11, 'India': 3, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'South Africa': 1, 'United Arab Emirates': 1, 'Czech Republic': 1}
+2025-10-29 14:53:12,139 INFO: After country filter: 2 records
+2025-10-29 14:53:12,169 INFO: After country filter: 2 records
+2025-10-29 14:53:12,185 INFO: After country filter: 2 records
+2025-10-29 14:53:12,195 INFO: After country filter: 2 records
+2025-10-29 14:53:15,991 INFO: After platform filter: 6 records
+2025-10-29 14:53:16,020 INFO: After platform filter: 6 records
+2025-10-29 14:53:16,032 INFO: After platform filter: 6 records
+2025-10-29 14:53:16,051 INFO: After platform filter: 6 records
+2025-10-29 14:53:18,619 INFO: After platform filter: 23 records
+2025-10-29 14:53:18,655 INFO: After platform filter: 23 records
+2025-10-29 14:53:18,662 INFO: After platform filter: 23 records
+2025-10-29 14:53:18,666 INFO: After platform filter: 23 records
+2025-10-29 14:53:26,000 INFO: After platform filter: 6 records
+2025-10-29 14:53:26,034 INFO: After platform filter: 6 records
+2025-10-29 14:53:26,041 INFO: After platform filter: 6 records
+2025-10-29 14:53:26,069 INFO: After platform filter: 6 records
+2025-10-29 14:53:30,284 INFO: After platform filter: 23 records
+2025-10-29 14:53:30,326 INFO: After platform filter: 23 records
+2025-10-29 14:53:30,327 INFO: After platform filter: 23 records
+2025-10-29 14:53:30,331 INFO: After platform filter: 23 records
+2025-10-29 14:53:38,960 INFO: After platform filter: 23 records
+2025-10-29 14:53:39,950 INFO: After platform filter: 23 records
+2025-10-29 14:53:40,779 INFO: After platform filter: 23 records
+2025-10-29 14:53:41,840 INFO: After platform filter: 23 records
+2025-10-29 14:55:17,052 INFO: Loaded 30 raw records
+2025-10-29 14:55:17,067 INFO: After date filtering: 30 records
+2025-10-29 14:55:17,200 INFO: Processing complete: 30 records
+2025-10-29 14:55:17,203 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Nigeria', 'Pakistan', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States', 'Unknown']
+2025-10-29 14:55:17,206 INFO: Country counts: {'United States': 11, 'India': 3, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'South Africa': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Unknown': 1}
+2025-10-29 15:09:41,131 INFO: Loaded 30 raw records
+2025-10-29 15:09:41,138 INFO: After date filtering: 30 records
+2025-10-29 15:09:41,161 INFO: Using Country column directly from CSV
+2025-10-29 15:09:41,164 INFO: Processing complete: 30 records
+2025-10-29 15:09:41,166 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Nigeria', 'Pakistan', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States', 'Unknown']
+2025-10-29 15:09:41,167 INFO: Country counts: {'United States': 11, 'India': 3, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'South Africa': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Unknown': 1}
+2025-10-29 15:10:53,903 INFO: Loaded 29 raw records
+2025-10-29 15:10:53,914 INFO: After date filtering: 29 records
+2025-10-29 15:10:53,944 INFO: Using Country column directly from CSV
+2025-10-29 15:10:53,947 INFO: Processing complete: 29 records
+2025-10-29 15:10:53,949 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Nigeria', 'Pakistan', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-10-29 15:10:53,951 INFO: Country counts: {'United States': 11, 'India': 3, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'South Africa': 1, 'United Arab Emirates': 1, 'Czech Republic': 1}
+2025-10-29 15:12:02,626 ERROR: Exception on /add-entry [GET]
+Traceback (most recent call last):
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\AivellumPro\zReport5\app.py", line 376, in add_entry_page
+    return send_file('add_entry.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\helpers.py", line 504, in send_file
+    return werkzeug.utils.send_file(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\werkzeug\utils.py", line 427, in send_file
+    stat = os.stat(path)
+           ^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified: 'd:\\AivellumPro\\zReport5\\add_entry.html'
+2025-10-29 15:15:24,404 INFO: Loaded 29 raw records
+2025-10-29 15:15:24,416 INFO: After date filtering: 29 records
+2025-10-29 15:15:24,456 INFO: Using Country column directly from CSV
+2025-10-29 15:15:24,463 INFO: Processing complete: 29 records
+2025-10-29 15:15:24,465 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Nigeria', 'Pakistan', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-10-29 15:15:24,467 INFO: Country counts: {'United States': 11, 'India': 3, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'South Africa': 1, 'United Arab Emirates': 1, 'Czech Republic': 1}
+2025-10-29 15:15:29,889 ERROR: Exception on /add-entry [GET]
+Traceback (most recent call last):
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\AivellumPro\zReport5\app.py", line 376, in add_entry_page
+    return send_file('add_entry.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\helpers.py", line 504, in send_file
+    return werkzeug.utils.send_file(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\werkzeug\utils.py", line 427, in send_file
+    stat = os.stat(path)
+           ^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified: 'd:\\AivellumPro\\zReport5\\add_entry.html'
+2025-10-29 15:15:31,219 ERROR: Exception on /add-entry [GET]
+Traceback (most recent call last):
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\AivellumPro\zReport5\app.py", line 376, in add_entry_page
+    return send_file('add_entry.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\helpers.py", line 504, in send_file
+    return werkzeug.utils.send_file(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\werkzeug\utils.py", line 427, in send_file
+    stat = os.stat(path)
+           ^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified: 'd:\\AivellumPro\\zReport5\\add_entry.html'
+2025-10-29 15:15:31,415 ERROR: Exception on /add-entry [GET]
+Traceback (most recent call last):
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\AivellumPro\zReport5\app.py", line 376, in add_entry_page
+    return send_file('add_entry.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\helpers.py", line 504, in send_file
+    return werkzeug.utils.send_file(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\werkzeug\utils.py", line 427, in send_file
+    stat = os.stat(path)
+           ^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified: 'd:\\AivellumPro\\zReport5\\add_entry.html'
+2025-10-29 15:15:31,600 ERROR: Exception on /add-entry [GET]
+Traceback (most recent call last):
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\AivellumPro\zReport5\app.py", line 376, in add_entry_page
+    return send_file('add_entry.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\helpers.py", line 504, in send_file
+    return werkzeug.utils.send_file(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\werkzeug\utils.py", line 427, in send_file
+    stat = os.stat(path)
+           ^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified: 'd:\\AivellumPro\\zReport5\\add_entry.html'
+2025-10-29 15:15:31,762 ERROR: Exception on /add-entry [GET]
+Traceback (most recent call last):
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\AivellumPro\zReport5\app.py", line 376, in add_entry_page
+    return send_file('add_entry.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\helpers.py", line 504, in send_file
+    return werkzeug.utils.send_file(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\werkzeug\utils.py", line 427, in send_file
+    stat = os.stat(path)
+           ^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified: 'd:\\AivellumPro\\zReport5\\add_entry.html'
+2025-10-29 15:15:31,901 ERROR: Exception on /add-entry [GET]
+Traceback (most recent call last):
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\AivellumPro\zReport5\app.py", line 376, in add_entry_page
+    return send_file('add_entry.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\helpers.py", line 504, in send_file
+    return werkzeug.utils.send_file(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\werkzeug\utils.py", line 427, in send_file
+    stat = os.stat(path)
+           ^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified: 'd:\\AivellumPro\\zReport5\\add_entry.html'
+2025-10-29 15:15:32,060 ERROR: Exception on /add-entry [GET]
+Traceback (most recent call last):
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\AivellumPro\zReport5\app.py", line 376, in add_entry_page
+    return send_file('add_entry.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\helpers.py", line 504, in send_file
+    return werkzeug.utils.send_file(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\werkzeug\utils.py", line 427, in send_file
+    stat = os.stat(path)
+           ^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified: 'd:\\AivellumPro\\zReport5\\add_entry.html'
+2025-10-29 15:15:32,200 ERROR: Exception on /add-entry [GET]
+Traceback (most recent call last):
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\AivellumPro\zReport5\app.py", line 376, in add_entry_page
+    return send_file('add_entry.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\flask\helpers.py", line 504, in send_file
+    return werkzeug.utils.send_file(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\khanb\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\werkzeug\utils.py", line 427, in send_file
+    stat = os.stat(path)
+           ^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified: 'd:\\AivellumPro\\zReport5\\add_entry.html'
+2025-10-29 15:21:21,652 INFO: Loaded 29 raw records
+2025-10-29 15:21:21,668 INFO: After date filtering: 29 records
+2025-10-29 15:21:21,694 INFO: Using Country column directly from CSV
+2025-10-29 15:21:21,700 INFO: Processing complete: 29 records
+2025-10-29 15:21:21,702 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Nigeria', 'Pakistan', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-10-29 15:21:21,705 INFO: Country counts: {'United States': 11, 'India': 3, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'South Africa': 1, 'United Arab Emirates': 1, 'Czech Republic': 1}
+2025-10-29 15:26:13,810 INFO: Loaded 30 raw records
+2025-10-29 15:26:13,825 INFO: After date filtering: 30 records
+2025-10-29 15:26:13,884 INFO: Using Country column directly from CSV
+2025-10-29 15:26:13,889 INFO: Processing complete: 30 records
+2025-10-29 15:26:13,893 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Nigeria', 'Pakistan', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-10-29 15:26:13,896 INFO: Country counts: {'United States': 11, 'India': 4, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'South Africa': 1, 'United Arab Emirates': 1, 'Czech Republic': 1}
+2025-10-29 15:31:46,509 INFO: Loaded 30 raw records
+2025-10-29 15:31:46,515 INFO: After date filtering: 30 records
+2025-10-29 15:31:46,533 INFO: Using Country column directly from CSV
+2025-10-29 15:31:46,535 INFO: Processing complete: 30 records
+2025-10-29 15:31:46,536 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Nigeria', 'Pakistan', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-10-29 15:31:46,537 INFO: Country counts: {'United States': 11, 'India': 4, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'South Africa': 1, 'United Arab Emirates': 1, 'Czech Republic': 1}
+2025-10-29 15:58:36,723 INFO: After platform filter: 24 records
+2025-10-29 15:58:36,774 INFO: After platform filter: 24 records
+2025-10-29 15:58:36,783 INFO: After platform filter: 24 records
+2025-10-29 15:58:36,795 INFO: After platform filter: 24 records
+2025-10-31 08:22:23,777 INFO: Loaded 30 raw records
+2025-10-31 08:22:23,788 INFO: After date filtering: 30 records
+2025-10-31 08:22:23,827 INFO: Using Country column directly from CSV
+2025-10-31 08:22:23,831 INFO: Processing complete: 30 records
+2025-10-31 08:22:23,832 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Nigeria', 'Pakistan', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-10-31 08:22:23,835 INFO: Country counts: {'United States': 11, 'India': 4, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'South Africa': 1, 'United Arab Emirates': 1, 'Czech Republic': 1}
+2025-10-31 19:14:24,468 INFO: Loaded 30 raw records
+2025-10-31 19:14:24,502 INFO: After date filtering: 30 records
+2025-10-31 19:14:24,553 INFO: Using Country column directly from CSV
+2025-10-31 19:14:24,557 INFO: Processing complete: 30 records
+2025-10-31 19:14:24,559 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Nigeria', 'Pakistan', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-10-31 19:14:24,563 INFO: Country counts: {'United States': 11, 'India': 4, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'South Africa': 1, 'United Arab Emirates': 1, 'Czech Republic': 1}
+2025-10-31 19:16:42,775 INFO: Loaded 31 raw records
+2025-10-31 19:16:42,783 INFO: After date filtering: 31 records
+2025-10-31 19:16:42,815 INFO: Using Country column directly from CSV
+2025-10-31 19:16:42,821 INFO: Processing complete: 31 records
+2025-10-31 19:16:42,823 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-10-31 19:16:42,825 INFO: Country counts: {'United States': 11, 'India': 4, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'South Africa': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1}
+2025-10-31 20:03:01,479 INFO: Loaded 31 raw records
+2025-10-31 20:03:01,493 INFO: After date filtering: 31 records
+2025-10-31 20:03:01,532 INFO: Using Country column directly from CSV
+2025-10-31 20:03:01,537 INFO: Processing complete: 31 records
+2025-10-31 20:03:01,540 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-10-31 20:03:01,542 INFO: Country counts: {'United States': 11, 'India': 4, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'South Africa': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1}
+2025-11-06 10:26:09,604 INFO: Loaded 31 raw records
+2025-11-06 10:26:09,625 INFO: After date filtering: 31 records
+2025-11-06 10:26:09,665 INFO: Using Country column directly from CSV
+2025-11-06 10:26:09,670 INFO: Processing complete: 31 records
+2025-11-06 10:26:09,672 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-11-06 10:26:09,676 INFO: Country counts: {'United States': 11, 'India': 4, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'South Africa': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1}
+2025-11-06 13:01:18,191 INFO: Loaded 32 raw records
+2025-11-06 13:01:18,207 INFO: After date filtering: 32 records
+2025-11-06 13:01:18,251 INFO: Using Country column directly from CSV
+2025-11-06 13:01:18,254 INFO: Processing complete: 32 records
+2025-11-06 13:01:18,256 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Netherlands', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-11-06 13:01:18,259 INFO: Country counts: {'United States': 11, 'India': 4, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'South Africa': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1, 'Netherlands': 1}
+2025-11-06 13:03:55,617 INFO: Loaded 33 raw records
+2025-11-06 13:03:55,628 INFO: After date filtering: 33 records
+2025-11-06 13:03:55,660 INFO: Using Country column directly from CSV
+2025-11-06 13:03:55,664 INFO: Processing complete: 33 records
+2025-11-06 13:03:55,667 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Netherlands', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-11-06 13:03:55,669 INFO: Country counts: {'United States': 11, 'India': 4, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'South Africa': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1, 'Netherlands': 1}
+2025-11-06 13:06:31,969 INFO: Loaded 34 raw records
+2025-11-06 13:06:31,978 INFO: After date filtering: 34 records
+2025-11-06 13:06:32,009 INFO: Using Country column directly from CSV
+2025-11-06 13:06:32,012 INFO: Processing complete: 34 records
+2025-11-06 13:06:32,014 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Netherlands', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-11-06 13:06:32,016 INFO: Country counts: {'United States': 11, 'India': 5, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'South Africa': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1, 'Netherlands': 1}
+2025-11-06 13:08:10,924 INFO: Loaded 34 raw records
+2025-11-06 13:08:10,938 INFO: After date filtering: 34 records
+2025-11-06 13:08:10,971 INFO: Using Country column directly from CSV
+2025-11-06 13:08:10,975 INFO: Processing complete: 34 records
+2025-11-06 13:08:10,976 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Netherlands', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-11-06 13:08:10,977 INFO: Country counts: {'United States': 11, 'India': 5, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'South Africa': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1, 'Netherlands': 1}
+2025-11-10 12:14:23,963 INFO: Loaded 34 raw records
+2025-11-10 12:14:23,976 INFO: After date filtering: 34 records
+2025-11-10 12:14:24,000 INFO: Using Country column directly from CSV
+2025-11-10 12:14:24,002 INFO: Processing complete: 34 records
+2025-11-10 12:14:24,004 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Netherlands', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-11-10 12:14:24,008 INFO: Country counts: {'United States': 11, 'India': 5, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'South Africa': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1, 'Netherlands': 1}
+2025-11-11 13:51:11,005 INFO: Loaded 34 raw records
+2025-11-11 13:51:11,029 INFO: After date filtering: 34 records
+2025-11-11 13:51:11,069 INFO: Using Country column directly from CSV
+2025-11-11 13:51:11,073 INFO: Processing complete: 34 records
+2025-11-11 13:51:11,076 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Netherlands', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-11-11 13:51:11,082 INFO: Country counts: {'United States': 11, 'India': 5, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'South Africa': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1, 'Netherlands': 1}
+2025-11-11 13:53:43,006 INFO: Loaded 35 raw records
+2025-11-11 13:53:43,020 INFO: After date filtering: 35 records
+2025-11-11 13:53:43,076 INFO: Using Country column directly from CSV
+2025-11-11 13:53:43,082 INFO: Processing complete: 35 records
+2025-11-11 13:53:43,084 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Netherlands', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-11-11 13:53:43,088 INFO: Country counts: {'United States': 12, 'India': 5, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'South Africa': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1, 'Netherlands': 1}
+2025-11-16 22:02:02,737 ERROR: Add entry error: [Errno 13] Permission denied: 'Aivellum_Sales.xlsx'
+2025-11-16 22:02:34,913 INFO: Loaded 35 raw records
+2025-11-16 22:02:34,922 INFO: After date filtering: 35 records
+2025-11-16 22:02:34,947 INFO: Using Country column directly from CSV
+2025-11-16 22:02:34,949 INFO: Processing complete: 35 records
+2025-11-16 22:02:34,951 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Netherlands', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-11-16 22:02:34,954 INFO: Country counts: {'United States': 12, 'India': 5, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'South Africa': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1, 'Netherlands': 1}
+2025-11-16 22:02:42,092 INFO: Loaded 36 raw records
+2025-11-16 22:02:42,104 INFO: After date filtering: 36 records
+2025-11-16 22:02:42,163 INFO: Using Country column directly from CSV
+2025-11-16 22:02:42,169 INFO: Processing complete: 36 records
+2025-11-16 22:02:42,171 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Netherlands', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-11-16 22:02:42,173 INFO: Country counts: {'United States': 13, 'India': 5, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'South Africa': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1, 'Netherlands': 1}
+2025-11-16 22:04:17,916 INFO: Loaded 36 raw records
+2025-11-16 22:04:17,930 INFO: After date filtering: 36 records
+2025-11-16 22:04:17,979 INFO: Using Country column directly from CSV
+2025-11-16 22:04:17,982 INFO: Processing complete: 36 records
+2025-11-16 22:04:17,984 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Netherlands', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-11-16 22:04:17,986 INFO: Country counts: {'United States': 13, 'India': 5, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'South Africa': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1, 'Netherlands': 1}
+2025-11-17 11:08:50,760 INFO: Loaded 36 raw records
+2025-11-17 11:08:50,775 INFO: After date filtering: 36 records
+2025-11-17 11:08:50,819 INFO: Using Country column directly from CSV
+2025-11-17 11:08:50,822 INFO: Processing complete: 36 records
+2025-11-17 11:08:50,824 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Netherlands', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-11-17 11:08:50,828 INFO: Country counts: {'United States': 13, 'India': 5, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'South Africa': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1, 'Netherlands': 1}
+2025-11-17 11:32:45,238 INFO: After platform filter: 6 records
+2025-11-17 11:32:45,308 INFO: After platform filter: 6 records
+2025-11-17 11:32:45,347 INFO: After platform filter: 6 records
+2025-11-17 11:32:45,355 INFO: After platform filter: 6 records
+2025-11-17 11:32:51,341 INFO: After platform filter: 6 records
+2025-11-17 11:32:54,765 INFO: After platform filter: 6 records
+2025-11-17 11:32:56,644 INFO: After platform filter: 6 records
+2025-11-17 11:33:00,209 INFO: After platform filter: 6 records
+2025-11-17 11:33:08,196 INFO: After platform filter: 6 records
+2025-11-17 11:33:17,708 INFO: After platform filter: 6 records
+2025-11-17 11:33:21,195 INFO: After platform filter: 6 records
+2025-11-17 11:33:22,155 INFO: After platform filter: 6 records
+2025-11-19 01:34:37,289 INFO: Loaded 37 raw records
+2025-11-19 01:34:37,323 INFO: After date filtering: 37 records
+2025-11-19 01:34:37,405 INFO: Using Country column directly from CSV
+2025-11-19 01:34:37,411 INFO: Processing complete: 37 records
+2025-11-19 01:34:37,413 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Netherlands', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-11-19 01:34:37,421 INFO: Country counts: {'United States': 13, 'India': 6, 'United Kingdom': 2, 'Australia': 2, 'Germany': 2, 'South Africa': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1, 'Netherlands': 1}
+2025-11-19 01:38:24,408 INFO: Loaded 38 raw records
+2025-11-19 01:38:24,422 INFO: After date filtering: 38 records
+2025-11-19 01:38:24,479 INFO: Using Country column directly from CSV
+2025-11-19 01:38:24,486 INFO: Processing complete: 38 records
+2025-11-19 01:38:24,487 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Netherlands', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-11-19 01:38:24,491 INFO: Country counts: {'United States': 13, 'India': 6, 'United Kingdom': 3, 'Australia': 2, 'Germany': 2, 'South Africa': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1, 'Netherlands': 1}
+2025-11-19 01:40:32,246 INFO: Loaded 38 raw records
+2025-11-19 01:40:32,266 INFO: After date filtering: 38 records
+2025-11-19 01:40:32,344 INFO: Using Country column directly from CSV
+2025-11-19 01:40:32,351 INFO: Processing complete: 38 records
+2025-11-19 01:40:32,354 INFO: Countries found: ['Australia', 'Czech Republic', 'Ecuador', 'Finland', 'Germany', 'Hungary', 'India', 'Netherlands', 'Nigeria', 'Pakistan', 'Philippines', 'South Africa', 'South Korea', 'United Arab Emirates', 'United Kingdom', 'United States']
+2025-11-19 01:40:32,358 INFO: Country counts: {'United States': 13, 'India': 6, 'United Kingdom': 3, 'Australia': 2, 'Germany': 2, 'South Africa': 2, 'Finland': 1, 'Ecuador': 1, 'South Korea': 1, 'Hungary': 1, 'Pakistan': 1, 'Nigeria': 1, 'United Arab Emirates': 1, 'Czech Republic': 1, 'Philippines': 1, 'Netherlands': 1}
+2025-11-20 00:27:01,609 INFO: Loaded 38 raw records [d:\AivellumPro\zReport5\app.py:250]
+2025-11-20 00:27:01,620 INFO: After date filtering: 38 records [d:\AivellumPro\zReport5\app.py:262]
+2025-11-20 00:27:01,632 INFO: Using Country column from data [d:\AivellumPro\zReport5\app.py:296]
+2025-11-20 00:27:01,635 INFO: Processing complete: 38 records [d:\AivellumPro\zReport5\app.py:313]
+2025-11-20 00:27:01,636 INFO: Countries: 16 unique [d:\AivellumPro\zReport5\app.py:314]
+2025-11-20 00:27:01,637 INFO: Data loaded successfully: 38 records [d:\AivellumPro\zReport5\app.py:353]
