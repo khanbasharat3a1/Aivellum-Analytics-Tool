@@ -384,36 +384,38 @@ def load_data():
 # ═══════════════════════════════════════════════════════════════════════════
 
 def get_filtered_data(start_date=None, end_date=None, country=None, platform=None):
-    """Get filtered dataset with FIXED date filtering"""
+    """Get filtered dataset with WORKING date filtering"""
     df = DATA_CACHE['processed_data']
     
     if df is None or df.empty:
         return pd.DataFrame()
     
-    # Start with all records
     filtered_df = df.copy()
+    original_count = len(filtered_df)
     
     try:
-        # FIXED: Simple date filtering without timezone issues
-        if start_date and start_date not in ['null', '', None, 'undefined', 'all']:
+        # Date filtering - ACTUALLY WORKS NOW
+        if start_date and str(start_date).strip() not in ['', 'null', 'undefined', 'all']:
             start_dt = pd.to_datetime(start_date).date()
             filtered_df = filtered_df[filtered_df['Date_IST'] >= start_dt]
-            app.logger.info(f"Applied start date filter: {start_dt}, records: {len(filtered_df)}")
+            app.logger.info(f"Start date {start_dt}: {len(filtered_df)} records")
         
-        if end_date and end_date not in ['null', '', None, 'undefined', 'all']:
+        if end_date and str(end_date).strip() not in ['', 'null', 'undefined', 'all']:
             end_dt = pd.to_datetime(end_date).date()
             filtered_df = filtered_df[filtered_df['Date_IST'] <= end_dt]
-            app.logger.info(f"Applied end date filter: {end_dt}, records: {len(filtered_df)}")
+            app.logger.info(f"End date {end_dt}: {len(filtered_df)} records")
         
-        if country and country not in ['all', '', None, 'undefined']:
-            filtered_df = filtered_df[filtered_df['Country'].str.contains(country, case=False, na=False)]
-            app.logger.info(f"Applied country filter: {country}, records: {len(filtered_df)}")
+        # Country filtering
+        if country and str(country).strip() not in ['', 'all', 'null', 'undefined']:
+            filtered_df = filtered_df[filtered_df['Country'] == country]
+            app.logger.info(f"Country {country}: {len(filtered_df)} records")
         
-        if platform and platform not in ['all', '', None, 'undefined']:
-            filtered_df = filtered_df[filtered_df['Platform'].str.contains(platform, case=False, na=False)]
-            app.logger.info(f"Applied platform filter: {platform}, records: {len(filtered_df)}")
+        # Platform filtering
+        if platform and str(platform).strip() not in ['', 'all', 'null', 'undefined']:
+            filtered_df = filtered_df[filtered_df['Platform'] == platform]
+            app.logger.info(f"Platform {platform}: {len(filtered_df)} records")
         
-        app.logger.info(f"Final filtered result: {len(filtered_df)} records from {len(df)} total")
+        app.logger.info(f"FILTER RESULT: {original_count} -> {len(filtered_df)} records")
         return filtered_df
             
     except Exception as e:
@@ -475,8 +477,8 @@ def api_kpis():
     """Get KPIs with optimized calculations"""
     try:
         df = get_filtered_data(
-            request.args.get('start_date'),
-            request.args.get('end_date'),
+            request.args.get('startDate'),
+            request.args.get('endDate'),
             request.args.get('country'),
             request.args.get('platform')
         )
@@ -548,8 +550,8 @@ def api_kpis():
 def api_revenue_trends():
     """Revenue trends - FIXED with proper chronological ordering"""
     try:
-        start_date = request.args.get('start_date')
-        end_date = request.args.get('end_date')
+        start_date = request.args.get('startDate')
+        end_date = request.args.get('endDate')
         country = request.args.get('country')
         platform = request.args.get('platform')
         granularity = request.args.get('granularity', 'daily')
@@ -619,8 +621,8 @@ def api_revenue_trends():
 def api_geographic():
     """Geographic - FIXED"""
     try:
-        start_date = request.args.get('start_date')
-        end_date = request.args.get('end_date')
+        start_date = request.args.get('startDate')
+        end_date = request.args.get('endDate')
         country = request.args.get('country')
         platform = request.args.get('platform')
         limit = request.args.get('limit', 20, type=int)
@@ -659,8 +661,8 @@ def api_geographic():
 def api_platforms():
     """Platform analysis"""
     try:
-        start_date = request.args.get('start_date')
-        end_date = request.args.get('end_date')
+        start_date = request.args.get('startDate')
+        end_date = request.args.get('endDate')
         country = request.args.get('country')
         platform = request.args.get('platform')
         
@@ -693,8 +695,8 @@ def api_platforms():
 def api_temporal_patterns():
     """Temporal patterns"""
     try:
-        start_date = request.args.get('start_date')
-        end_date = request.args.get('end_date')
+        start_date = request.args.get('startDate')
+        end_date = request.args.get('endDate')
         country = request.args.get('country')
         platform = request.args.get('platform')
         
@@ -737,8 +739,8 @@ def api_temporal_patterns():
 def api_insights():
     """AI Insights - FIXED"""
     try:
-        start_date = request.args.get('start_date')
-        end_date = request.args.get('end_date')
+        start_date = request.args.get('startDate')
+        end_date = request.args.get('endDate')
         country = request.args.get('country')
         platform = request.args.get('platform')
         
@@ -859,8 +861,8 @@ def api_filter_options():
 def api_export(format):
     """Export - FIXED"""
     try:
-        start_date = request.args.get('start_date')
-        end_date = request.args.get('end_date')
+        start_date = request.args.get('startDate')
+        end_date = request.args.get('endDate')
         country = request.args.get('country')
         platform = request.args.get('platform')
         
@@ -998,6 +1000,42 @@ def api_platform_options():
             'income_categories': list(INCOME_CATEGORIES.keys())
         }
     })
+
+@app.route('/debug-filter')
+def debug_filter():
+    """Debug filtering"""
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    
+    df = DATA_CACHE['processed_data']
+    if df is None:
+        return jsonify({'error': 'No data loaded'})
+    
+    result = {
+        'total_records': len(df),
+        'start_date_param': start_date,
+        'end_date_param': end_date,
+        'date_range_in_data': {
+            'min': str(df['Date_IST'].min()),
+            'max': str(df['Date_IST'].max())
+        },
+        'sample_dates': df['Date_IST'].head(10).astype(str).tolist()
+    }
+    
+    if start_date:
+        start_dt = pd.to_datetime(start_date).date()
+        filtered = df[df['Date_IST'] >= start_dt]
+        result['after_start_filter'] = len(filtered)
+        
+    if end_date:
+        end_dt = pd.to_datetime(end_date).date()
+        if start_date:
+            filtered = filtered[filtered['Date_IST'] <= end_dt]
+        else:
+            filtered = df[df['Date_IST'] <= end_dt]
+        result['after_end_filter'] = len(filtered)
+    
+    return jsonify(result)
 
 @app.route('/health')
 def health():

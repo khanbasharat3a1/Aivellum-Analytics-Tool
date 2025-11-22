@@ -767,7 +767,16 @@
                 platform: document.getElementById('platformFilter').value
             };
             
-            console.log('Applying filters:', state.filters);
+            console.log('🔍 APPLYING FILTERS:', state.filters);
+            
+            // Debug: Test the filter directly
+            if (state.filters.startDate || state.filters.endDate) {
+                const debugUrl = `/debug-filter?start_date=${state.filters.startDate}&end_date=${state.filters.endDate}`;
+                fetch(debugUrl)
+                    .then(r => r.json())
+                    .then(data => console.log('🐛 DEBUG FILTER RESULT:', data));
+            }
+            
             showToast('Filters Applied', 'Refreshing data...', 'info');
             refreshData();
         }
