@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Sale Entry - Aivellum Analytics</title>
+    <title>Add Income Entry - Aivellum Income Tracker</title>
     <style>
         * {
             margin: 0;
@@ -37,6 +37,16 @@
             font-size: 28px;
             margin-bottom: 8px;
             font-weight: 700;
+        }
+        
+        .dynamic-input {
+            display: none;
+            margin-top: 10px;
+        }
+        
+        .dynamic-input.show {
+            display: block;
+            animation: slideDown 0.3s ease;
         }
 
         .header p {
@@ -316,8 +326,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Add New Sale Entry</h1>
-            <p>Fill in all required fields to add a new transaction to the database</p>
+            <h1>💰 Add Income Entry</h1>
+            <p>Track your income from apps, promotions, services, and other revenue streams</p>
             <div class="nav-buttons">
                 <a href="/" class="nav-btn">← Back to Dashboard</a>
             </div>
@@ -340,8 +350,33 @@
             </div>
 
             <form id="entryForm">
+                <!-- Income Details -->
+                <div class="section-title">💵 Income Details</div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Income Category <span class="required">*</span></label>
+                        <select id="incomeCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="App Sales">App Sales</option>
+                            <option value="Digital Products">Digital Products</option>
+                            <option value="Promotions">Promotions & Affiliates</option>
+                            <option value="Services">Services & Consulting</option>
+                            <option value="Subscriptions">Subscriptions</option>
+                            <option value="Other">Other Income</option>
+                        </select>
+                        <span class="error-message" id="incomeCategoryError">Income category is required</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Transaction ID <span class="required">*</span></label>
+                        <input type="text" id="purchaseId" placeholder="e.g., GPA.3358-1016-7927-87380 or custom ID" required>
+                        <span class="error-message" id="purchaseIdError">Transaction ID is required</span>
+                    </div>
+                </div>
+                
                 <!-- Transaction Details -->
-                <div class="section-title">Transaction Details</div>
+                <div class="section-title">📅 Transaction Details</div>
                 
                 <div class="form-grid">
                     <div class="form-group">
@@ -359,32 +394,37 @@
 
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>Purchase ID <span class="required">*</span></label>
-                        <input type="text" id="purchaseId" placeholder="e.g., GPA.3358-1016-7927-87380" required>
-                        <span class="error-message" id="purchaseIdError">Purchase ID is required</span>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Platform <span class="required">*</span></label>
-                        <select id="platform" required>
+                        <label>Platform/Source <span class="required">*</span></label>
+                        <select id="platform" required onchange="toggleOtherInput('platform')">
                             <option value="">Select Platform</option>
                             <option value="Play Store">Play Store</option>
-                            <option value="Aivellum">Aivellum (Apple)</option>
                             <option value="App Store">App Store</option>
+                            <option value="Aivellum">Aivellum</option>
+                            <option value="Gumroad">Gumroad</option>
                             <option value="Stripe">Stripe</option>
                             <option value="PayPal">PayPal</option>
-                            <option value="Other">Other</option>
+                            <option value="Affiliate Network">Affiliate Network</option>
+                            <option value="Direct Sales">Direct Sales</option>
+                            <option value="Consulting">Consulting</option>
+                            <option value="Freelance">Freelance</option>
+                            <option value="YouTube">YouTube</option>
+                            <option value="Blog">Blog</option>
+                            <option value="Course Sales">Course Sales</option>
+                            <option value="Other">Other (specify)</option>
                         </select>
+                        <div class="dynamic-input" id="platformOtherInput">
+                            <input type="text" id="platformOther" placeholder="Enter platform name">
+                        </div>
                         <span class="error-message" id="platformError">Platform is required</span>
                     </div>
                 </div>
 
-                <!-- Customer Details -->
-                <div class="section-title">Customer Details</div>
+                <!-- Customer/Source Details -->
+                <div class="section-title">🌍 Customer/Source Details</div>
 
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>Country <span class="required">*</span></label>
+                        <label>Country/Region <span class="required">*</span></label>
                         <select id="country" required>
                             <option value="">Select Country</option>
                         </select>
@@ -392,75 +432,90 @@
                     </div>
 
                     <div class="form-group">
-                        <label>For (Users)</label>
-                        <select id="forUsers">
+                        <label>Target Audience/Users</label>
+                        <select id="forUsers" onchange="toggleOtherInput('forUsers')">
                             <option value="">Select User Type</option>
-                            <option value="Android">Android</option>
-                            <option value="iOS">iOS</option>
-                            <option value="Apple">Apple</option>
-                            <option value="Web">Web</option>
-                            <option value="Desktop">Desktop</option>
-                            <option value="Other">Other</option>
+                            <option value="Android">Android Users</option>
+                            <option value="iOS">iOS Users</option>
+                            <option value="Web">Web Users</option>
+                            <option value="Desktop">Desktop Users</option>
+                            <option value="Mobile">Mobile Users</option>
+                            <option value="Enterprise">Enterprise</option>
+                            <option value="Individual">Individual</option>
+                            <option value="Student">Student</option>
+                            <option value="Developer">Developer</option>
+                            <option value="Other">Other (specify)</option>
                         </select>
-                        <p class="help-text">Optional: Platform/device type</p>
+                        <div class="dynamic-input" id="forUsersOtherInput">
+                            <input type="text" id="forUsersOther" placeholder="Enter user type">
+                        </div>
+                        <p class="help-text">Optional: Target audience or user type</p>
                     </div>
                 </div>
 
-                <div class="form-grid full">
+                <div class="form-grid">
                     <div class="form-group">
                         <label>Billing Address</label>
-                        <textarea id="billingAddress" placeholder="Enter full billing address (optional)"></textarea>
+                        <textarea id="billingAddress" placeholder="Enter billing address (optional)"></textarea>
                         <p class="help-text">Reference only - not used for country detection</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <textarea id="notes" placeholder="Additional notes about this income (optional)"></textarea>
+                        <p class="help-text">Campaign details, referral source, etc.</p>
                     </div>
                 </div>
 
                 <!-- Financial Details -->
-                <div class="section-title">Financial Details</div>
+                <div class="section-title">💰 Financial Details</div>
 
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>Total Amount Paid <span class="required">*</span></label>
+                        <label>Gross Income <span class="required">*</span></label>
                         <div class="currency-input-group">
                             <select id="totalCurrency" required></select>
                             <input type="number" id="totalAmount" step="0.01" placeholder="0.00" required>
                         </div>
-                        <span class="error-message" id="totalAmountError">Total amount is required</span>
+                        <span class="error-message" id="totalAmountError">Gross income is required</span>
+                        <p class="help-text">Total amount received before deductions</p>
                     </div>
 
                     <div class="form-group">
-                        <label>List Price <span class="required">*</span></label>
+                        <label>Base Price/Rate <span class="required">*</span></label>
                         <div class="currency-input-group">
                             <select id="listCurrency" required></select>
                             <input type="number" id="listPrice" step="0.01" placeholder="0.00" required>
                         </div>
-                        <span class="error-message" id="listPriceError">List price is required</span>
+                        <span class="error-message" id="listPriceError">Base price is required</span>
+                        <p class="help-text">Original price/rate before taxes</p>
                     </div>
                 </div>
 
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>Tax Amount</label>
+                        <label>Tax/Fees Amount</label>
                         <div class="currency-input-group">
                             <select id="taxCurrency"></select>
                             <input type="number" id="taxAmount" step="0.01" placeholder="0.00">
                         </div>
-                        <p class="help-text">Optional: Total Amount - List Price</p>
+                        <p class="help-text">Taxes, processing fees, etc.</p>
                     </div>
 
                     <div class="form-group">
-                        <label>Net Amount (After Deductions)</label>
+                        <label>Net Income (After All Deductions)</label>
                         <div class="currency-input-group">
                             <select id="netCurrency"></select>
                             <input type="number" id="netAmount" step="0.01" placeholder="0.00">
                         </div>
-                        <p class="help-text">Optional: Amount after platform fees</p>
+                        <p class="help-text">Final amount received after all fees</p>
                     </div>
                 </div>
 
                 <!-- Buttons -->
                 <div class="button-group">
                     <button type="button" class="btn-secondary" onclick="resetForm()">Clear Form</button>
-                    <button type="submit" class="btn-primary" id="submitBtn">Add Entry</button>
+                    <button type="submit" class="btn-primary" id="submitBtn">💾 Add Income Entry</button>
                 </div>
             </form>
         </div>
@@ -485,6 +540,21 @@
             await loadCurrencies();
             setDefaultDateTime();
         });
+        
+        // Toggle other input fields
+        function toggleOtherInput(fieldType) {
+            const select = document.getElementById(fieldType);
+            const otherInput = document.getElementById(fieldType + 'OtherInput');
+            
+            if (select.value === 'Other') {
+                otherInput.classList.add('show');
+                document.getElementById(fieldType + 'Other').required = true;
+            } else {
+                otherInput.classList.remove('show');
+                document.getElementById(fieldType + 'Other').required = false;
+                document.getElementById(fieldType + 'Other').value = '';
+            }
+        }
 
         // Load currencies
         async function loadCurrencies() {
@@ -569,8 +639,17 @@
                 { id: 'platform', error: 'platformError' },
                 { id: 'country', error: 'countryError' },
                 { id: 'totalAmount', error: 'totalAmountError' },
-                { id: 'listPrice', error: 'listPriceError' }
+                { id: 'listPrice', error: 'listPriceError' },
+                { id: 'incomeCategory', error: 'incomeCategoryError' }
             ];
+            
+            // Check dynamic other inputs
+            if (document.getElementById('platform').value === 'Other') {
+                required.push({ id: 'platformOther', error: 'platformError' });
+            }
+            if (document.getElementById('forUsers').value === 'Other') {
+                required.push({ id: 'forUsersOther', error: 'forUsersError' });
+            }
             
             required.forEach(field => {
                 const input = document.getElementById(field.id);
@@ -619,9 +698,13 @@
                 time: document.getElementById('time').value + ':00 UTC',
                 purchase_id: document.getElementById('purchaseId').value.trim(),
                 platform: document.getElementById('platform').value,
+                platform_other: document.getElementById('platformOther').value.trim(),
                 country: document.getElementById('country').value,
                 for_users: document.getElementById('forUsers').value || '',
+                for_users_other: document.getElementById('forUsersOther').value.trim(),
                 billing_address: document.getElementById('billingAddress').value.trim() || '',
+                income_category: document.getElementById('incomeCategory').value,
+                notes: document.getElementById('notes').value.trim() || '',
                 total_amount: `${document.getElementById('totalCurrency').value} ${document.getElementById('totalAmount').value}`,
                 list_price: `${document.getElementById('listCurrency').value} ${document.getElementById('listPrice').value}`,
                 tax: document.getElementById('taxAmount').value ? 
@@ -642,15 +725,15 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    showSuccess(`Entry #${result.entry_number} added successfully! Redirecting...`);
+                    showSuccess(`🎉 Income entry #${result.entry_number} added successfully!\nPlatform: ${result.platform}\nAmount: ${result.amount}\n\nRedirecting to dashboard...`);
                     resetForm();
                     
-                    // Redirect after 2 seconds
+                    // Redirect after 3 seconds
                     setTimeout(() => {
                         window.location.href = '/';
-                    }, 2000);
+                    }, 3000);
                 } else {
-                    showError(result.error || 'Failed to add entry');
+                    showError(result.error || 'Failed to add income entry');
                 }
             } catch (error) {
                 showError('Network error: ' + error.message);
@@ -667,6 +750,7 @@
             hideAlerts();
             document.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
             document.querySelectorAll('input, select').forEach(el => el.classList.remove('error'));
+            document.querySelectorAll('.dynamic-input').forEach(el => el.classList.remove('show'));
             
             // Reset currency selects to USD
             ['totalCurrency', 'listCurrency', 'taxCurrency', 'netCurrency'].forEach(id => {
