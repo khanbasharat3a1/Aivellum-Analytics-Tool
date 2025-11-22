@@ -406,6 +406,23 @@
         <!-- Filters -->
         <div class="filters-card">
             <h5 class="mb-3">🔍 Income Filters</h5>
+            
+            <!-- Quick Date Filters -->
+            <div class="mb-3">
+                <label class="form-label">Quick Filters</label>
+                <div class="btn-group flex-wrap" role="group">
+                    <button class="btn btn-outline-primary btn-sm" onclick="setQuickFilter('24h')">Last 24h</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setQuickFilter('7d')">7 Days</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setQuickFilter('30d')">30 Days</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setQuickFilter('thisMonth')">This Month</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setQuickFilter('lastMonth')">Last Month</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setQuickFilter('90d')">90 Days</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setQuickFilter('6m')">6 Months</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setQuickFilter('1y')">1 Year</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setQuickFilter('all')">All Time</button>
+                </div>
+            </div>
+            
             <div class="row g-3">
                 <div class="col-md-3">
                     <label class="form-label">Start Date</label>
@@ -758,6 +775,56 @@
             }
         }
         
+        // Quick date filters
+        function setQuickFilter(period) {
+            const now = new Date();
+            let startDate, endDate;
+            
+            switch(period) {
+                case '24h':
+                    startDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+                    endDate = now;
+                    break;
+                case '7d':
+                    startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                    endDate = now;
+                    break;
+                case '30d':
+                    startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                    endDate = now;
+                    break;
+                case 'thisMonth':
+                    startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+                    endDate = now;
+                    break;
+                case 'lastMonth':
+                    startDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+                    endDate = new Date(now.getFullYear(), now.getMonth(), 0);
+                    break;
+                case '90d':
+                    startDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+                    endDate = now;
+                    break;
+                case '6m':
+                    startDate = new Date(now.getFullYear(), now.getMonth() - 6, now.getDate());
+                    endDate = now;
+                    break;
+                case '1y':
+                    startDate = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+                    endDate = now;
+                    break;
+                case 'all':
+                    document.getElementById('startDate').value = '';
+                    document.getElementById('endDate').value = '';
+                    applyFilters();
+                    return;
+            }
+            
+            document.getElementById('startDate').value = startDate.toISOString().split('T')[0];
+            document.getElementById('endDate').value = endDate.toISOString().split('T')[0];
+            applyFilters();
+        }
+        
         // Apply filters
         function applyFilters() {
             state.filters = {
@@ -768,14 +835,6 @@
             };
             
             console.log('🔍 APPLYING FILTERS:', state.filters);
-            
-            // Debug: Test the filter directly
-            if (state.filters.startDate || state.filters.endDate) {
-                const debugUrl = `/debug-filter?start_date=${state.filters.startDate}&end_date=${state.filters.endDate}`;
-                fetch(debugUrl)
-                    .then(r => r.json())
-                    .then(data => console.log('🐛 DEBUG FILTER RESULT:', data));
-            }
             
             showToast('Filters Applied', 'Refreshing data...', 'info');
             refreshData();

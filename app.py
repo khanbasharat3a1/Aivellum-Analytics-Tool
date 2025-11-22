@@ -571,10 +571,15 @@ def api_revenue_trends():
             trends = trends.sort_values('date')  # FIXED: Proper chronological order
             trends['date'] = trends['date'].astype(str)
             
-            # Fill missing dates
+            # Fill missing dates using selected date range
             if len(trends) > 0:
-                min_date = pd.to_datetime(trends['date'].min())
-                max_date = pd.to_datetime(trends['date'].max())
+                # Use filter dates if provided, otherwise use data range
+                if start_date and end_date:
+                    min_date = pd.to_datetime(start_date)
+                    max_date = pd.to_datetime(end_date)
+                else:
+                    min_date = pd.to_datetime(trends['date'].min())
+                    max_date = pd.to_datetime(trends['date'].max())
                 trends_list = trends.to_dict('records')
                 trends_list = fill_missing_dates(trends_list, min_date, max_date)
                 return jsonify({'success': True, 'data': trends_list, 'granularity': granularity})
