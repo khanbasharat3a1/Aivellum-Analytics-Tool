@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Financial Entry - Aivellum</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; color: #333; }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 2rem; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        
+        .nav-tabs {
+            background: white; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+        }
+        .nav-tab {
+            padding: 0.75rem 1.5rem; background: #f8f9fa; border: none; border-radius: 8px;
+            cursor: pointer; font-weight: 600; transition: all 0.3s; text-decoration: none; color: #333;
+        }
+        .nav-tab.active { background: #667eea; color: white; }
+        .nav-tab:hover { background: #e9ecef; }
+        .nav-tab.active:hover { background: #5a6fd8; }
+        
+        .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        
+        .form-container {
+            background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .form-container h2 { margin-bottom: 1.5rem; color: #333; text-align: center; }
+        
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #555; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px;
+            font-size: 1rem; transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        
+        .btn {
+            padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer;
+            font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.3s;
+            font-size: 1rem;
+        }
+        .btn-primary { background: #667eea; color: white; }
+        .btn-primary:hover { background: #5a6fd8; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-success:hover { background: #218838; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-secondary:hover { background: #5a6268; }
+        
+        .btn-group { display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; }
+        
+        .alert {
+            padding: 1rem; border-radius: 8px; margin-bottom: 1rem; font-weight: 500;
+        }
+        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        
+        .form-section {
+            display: none; animation: fadeIn 0.3s ease-in;
+        }
+        .form-section.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+            .nav-tabs { flex-direction: column; }
+            .btn-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>➕ Add Financial Entry</h1>
+        <p>Track your income, expenses, and planned activities</p>
+    </div>
+    
+    <div class="nav-tabs">
+        <button class="nav-tab active" onclick="showForm('income')">💰 Add Income</button>
+        <button class="nav-tab" onclick="showForm('expense')">💸 Add Expense</button>
+        <button class="nav-tab" onclick="showForm('planned')">📅 Add Planned</button>
+        <a href="/financials" class="nav-tab">📊 View Financials</a>
+        <a href="/" class="nav-tab">🏠 Dashboard</a>
+    </div>
+    
+    <div class="container">
+        <div id="alerts"></div>
+        
+        <!-- Income Form -->
+        <div id="income-form" class="form-section active">
+            <div class="form-container">
+                <h2>💰 Add Income Entry</h2>
+                <form id="incomeForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="incomeSource">Income Source *</label>
+                            <input type="text" id="incomeSource" name="source" required 
+                                   placeholder="e.g., Gumroad, Play Console, Runnable">
+                        </div>
+                        <div class="form-group">
+                            <label for="incomeAmount">Amount (₹) *</label>
+                            <input type="number" id="incomeAmount" name="amount" required 
+                                   step="0.01" min="0" placeholder="0.00">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="incomeDate">Date *</label>
+                            <input type="date" id="incomeDate" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="incomeCategory">Category</label>
+                            <select id="incomeCategory" name="category">
+                                <option value="Digital Products">Digital Products</option>
+                                <option value="App Revenue">App Revenue</option>
+                                <option value="Services">Services</option>
+                                <option value="Consulting">Consulting</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="incomeNotes">Notes</label>
+                        <textarea id="incomeNotes" name="notes" 
+                                  placeholder="Additional details about this income..."></textarea>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-success">💰 Add Income</button>
+                        <button type="reset" class="btn btn-secondary">🔄 Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Expense Form -->
+        <div id="expense-form" class="form-section">
+            <div class="form-container">
+                <h2>💸 Add Expense Entry</h2>
+                <form id="expenseForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expenseDescription">Description *</label>
+                            <input type="text" id="expenseDescription" name="description" required 
+                                   placeholder="e.g., Cursor Pro, Basharat Salary">
+                        </div>
+                        <div class="form-group">
+                            <label for="expenseAmount">Amount (₹) *</label>
+                            <input type="number" id="expenseAmount" name="amount" required 
+                                   step="0.01" min="0" placeholder="0.00">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expenseDate">Date *</label>
+                            <input type="date" id="expenseDate" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="expenseCategory">Category *</label>
+                            <select id="expenseCategory" name="category" required>
+                                <option value="">Select Category</option>
+                                <option value="Salaries">Salaries</option>
+                                <option value="Outsourcing">Outsourcing</option>
+                                <option value="Tools">Tools</option>
+                                <option value="Business">Business</option>
+                                <option value="Marketing">Marketing</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expenseType">Type *</label>
+                            <select id="expenseType" name="type" required>
+                                <option value="">Select Type</option>
+                                <option value="Software">Software</option>
+                                <option value="Service">Service</option>
+                                <option value="Employee">Employee</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="expenseRecurring">Recurring?</label>
+                            <select id="expenseRecurring" name="recurring">
+                                <option value="No">No</option>
+                                <option value="Monthly">Monthly</option>
+                                <option value="Quarterly">Quarterly</option>
+                                <option value="Yearly">Yearly</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="expenseNotes">Notes</label>
+                        <textarea id="expenseNotes" name="notes" 
+                                  placeholder="Additional details about this expense..."></textarea>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-success">💸 Add Expense</button>
+                        <button type="reset" class="btn btn-secondary">🔄 Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Planned Activity Form -->
+        <div id="planned-form" class="form-section">
+            <div class="form-container">
+                <h2>📅 Add Planned Activity</h2>
+                <form id="plannedForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="plannedActivity">Activity *</label>
+                            <input type="text" id="plannedActivity" name="activity" required 
+                                   placeholder="e.g., Zoho Workplace, Domain Renewal">
+                        </div>
+                        <div class="form-group">
+                            <label for="plannedCost">Estimated Cost (₹) *</label>
+                            <input type="number" id="plannedCost" name="cost" required 
+                                   step="0.01" min="0" placeholder="0.00">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="plannedPriority">Priority *</label>
+                            <select id="plannedPriority" name="priority" required>
+                                <option value="">Select Priority</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="plannedStatus">Status *</label>
+                            <select id="plannedStatus" name="status" required>
+                                <option value="">Select Status</option>
+                                <option value="Planned">Planned</option>
+                                <option value="Pending">Pending</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Recurring">Recurring</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="plannedTargetDate">Target Date</label>
+                        <input type="date" id="plannedTargetDate" name="target_date">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="plannedNotes">Notes</label>
+                        <textarea id="plannedNotes" name="notes" 
+                                  placeholder="Additional details about this planned activity..."></textarea>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-success">📅 Add Planned</button>
+                        <button type="reset" class="btn btn-secondary">🔄 Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Form management
+        function showForm(formType) {
+            // Hide all forms
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected form
+            document.getElementById(formType + '-form').classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        // Set today's date as default
+        function setDefaultDates() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('incomeDate').value = today;
+            document.getElementById('expenseDate').value = today;
+        }
+        
+        // Show alert
+        function showAlert(message, type = 'success') {
+            const alertsContainer = document.getElementById('alerts');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            
+            alertsContainer.appendChild(alertDiv);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 5000);
+        }
+        
+        // Handle form submissions
+        document.getElementById('incomeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            try {
+                const response = await fetch('/api/financial/add-income', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert('Income entry added successfully! 💰', 'success');
+                    e.target.reset();
+                    setDefaultDates();
+                } else {
+                    showAlert('Error: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showAlert('Network error: ' + error.message, 'error');
+            }
+        });
+        
+        document.getElementById('expenseForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            try {
+                const response = await fetch('/api/financial/add-expense', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert('Expense entry added successfully! 💸', 'success');
+                    e.target.reset();
+                    setDefaultDates();
+                } else {
+                    showAlert('Error: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showAlert('Network error: ' + error.message, 'error');
+            }
+        });
+        
+        document.getElementById('plannedForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            try {
+                const response = await fetch('/api/financial/add-planned', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert('Planned activity added successfully! 📅', 'success');
+                    e.target.reset();
+                } else {
+                    showAlert('Error: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showAlert('Network error: ' + error.message, 'error');
+            }
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setDefaultDates();
+        });
+    </script>
+</body>
+</html>

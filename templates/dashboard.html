@@ -397,6 +397,9 @@
                 <a href="/add-entry" class="btn btn-primary btn-sm">
                     💰 Add Income
                 </a>
+                <a href="/financials" class="btn btn-success btn-sm">
+                    💸 Financials
+                </a>
             </div>
         </div>
     </nav>
@@ -482,6 +485,11 @@
             <li class="nav-item">
                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#forecast" onclick="loadForecast()">
                     🔮 Income Forecast
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#financial" onclick="loadFinancialSummary()">
+                    💸 Cash Flow
                 </button>
             </li>
         </ul>
@@ -675,6 +683,43 @@
                     <div class="chart-container tall">
                         <canvas id="forecastChart"></canvas>
                     </div>
+                </div>
+            </div>
+            
+            <!-- Financial Tab -->
+            <div class="tab-pane fade" id="financial">
+                <div class="row" id="financialKpis">
+                    <div class="col-12">
+                        <div class="loading">
+                            <div class="spinner-border text-primary"></div>
+                            <p class="mt-3 text-muted">Loading financial data...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="chart-card">
+                            <h5 class="chart-title">💰 Cash Flow Overview</h5>
+                            <div class="chart-container">
+                                <canvas id="cashFlowOverviewChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="chart-card">
+                            <h5 class="chart-title">📊 Expense Categories</h5>
+                            <div class="chart-container">
+                                <canvas id="expenseCategoriesOverviewChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="/financials" class="btn btn-primary btn-lg">
+                        💸 View Full Financial Dashboard
+                    </a>
                 </div>
             </div>
         </div>
@@ -1441,6 +1486,138 @@
             }
         }
         
+        // Load financial summary
+        async function loadFinancialSummary() {
+            try {
+                const data = await fetchAPI('financial/summary');
+                
+                // Update financial KPIs
+                document.getElementById('financialKpis').innerHTML = `
+                    <div class="col-lg-3 col-md-6">
+                        <div class="kpi-card success">
+                            <div class="kpi-icon">💰</div>
+                            <div class="kpi-label">Total Income</div>
+                            <div class="kpi-value">₹${formatNumber(data.total_income)}</div>
+                            <div class="kpi-subtext">Money received</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="kpi-card danger">
+                            <div class="kpi-icon">💸</div>
+                            <div class="kpi-label">Total Expenses</div>
+                            <div class="kpi-value">₹${formatNumber(data.total_expenses)}</div>
+                            <div class="kpi-subtext">Business costs</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="kpi-card ${data.net_cash_flow >= 0 ? 'success' : 'danger'}">
+                            <div class="kpi-icon">${data.net_cash_flow >= 0 ? '📈' : '📉'}</div>
+                            <div class="kpi-label">Net Cash Flow</div>
+                            <div class="kpi-value">₹${formatNumber(data.net_cash_flow)}</div>
+                            <div class="kpi-subtext">Income - Expenses</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="kpi-card warning">
+                            <div class="kpi-icon">📅</div>
+                            <div class="kpi-label">Planned Expenses</div>
+                            <div class="kpi-value">₹${formatNumber(data.planned_expenses)}</div>
+                            <div class="kpi-subtext">Upcoming costs</div>
+                        </div>
+                    </div>
+                `;
+                
+                // Cash flow chart
+                const cashFlowCtx = document.getElementById('cashFlowOverviewChart');
+                if (state.charts.cashFlowOverview) state.charts.cashFlowOverview.destroy();
+                
+                state.charts.cashFlowOverview = new Chart(cashFlowCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Income', 'Expenses', 'Net Flow'],
+                        datasets: [{
+                            data: [data.total_income, -data.total_expenses, data.net_cash_flow],
+                            backgroundColor: [COLORS.success, COLORS.danger, data.net_cash_flow >= 0 ? COLORS.success : COLORS.danger],
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { 
+                                    color: '#cbd5e1',
+                                    callback: value => `₹${formatNumber(Math.abs(value))}`
+                                },
+                                grid: { color: '#334155' }
+                            },
+                            x: {
+                                ticks: { color: '#cbd5e1' },
+                                grid: { color: '#334155' }
+                            }
+                        }
+                    }
+                });
+                
+                // Expense categories chart
+                const expenseCtx = document.getElementById('expenseCategoriesOverviewChart');
+                if (state.charts.expenseCategoriesOverview) state.charts.expenseCategoriesOverview.destroy();
+                
+                const categories = Object.keys(data.expenses_by_category);
+                const amounts = Object.values(data.expenses_by_category);
+                
+                if (categories.length > 0) {
+                    state.charts.expenseCategoriesOverview = new Chart(expenseCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: categories,
+                            datasets: [{
+                                data: amounts,
+                                backgroundColor: COLORS.rainbow
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    labels: { color: '#cbd5e1' }
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: ctx => `${ctx.label}: ₹${formatNumber(ctx.parsed)}`
+                                    }
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    expenseCtx.getContext('2d').fillStyle = '#cbd5e1';
+                    expenseCtx.getContext('2d').font = '16px Inter';
+                    expenseCtx.getContext('2d').textAlign = 'center';
+                    expenseCtx.getContext('2d').fillText('No expense data', expenseCtx.width/2, expenseCtx.height/2);
+                }
+                
+            } catch (error) {
+                console.error('Financial summary error:', error);
+                document.getElementById('financialKpis').innerHTML = `
+                    <div class="col-12">
+                        <div class="alert alert-danger">
+                            <h5>Error Loading Financial Data</h5>
+                            <p>Unable to load financial information. Please check if the financial data file exists.</p>
+                            <a href="/add-financial" class="btn btn-primary">Add Financial Data</a>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
         // Export data
         function exportData() {
             const format = confirm('Export as Excel? (Cancel for CSV)') ? 'excel' : 'csv';
@@ -1490,6 +1667,14 @@
             refreshData();
             console.log('Auto-refresh at', new Date().toLocaleTimeString());
         }, 300000);
+        
+        // Load financial summary on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add a small delay to ensure other components are loaded first
+            setTimeout(() => {
+                loadFinancialSummary();
+            }, 2000);
+        });
         
         console.log('🎯 Aivellum Analytics Dashboard Loaded');
         console.log('💡 Filters now work properly!');

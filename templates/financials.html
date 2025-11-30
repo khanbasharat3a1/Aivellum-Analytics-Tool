@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aivellum Financial Management</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; color: #333; }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 2rem; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        
+        .nav-tabs {
+            background: white; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex; justify-content: center; gap: 1rem;
+        }
+        .nav-tab {
+            padding: 0.75rem 1.5rem; background: #f8f9fa; border: none; border-radius: 8px;
+            cursor: pointer; font-weight: 600; transition: all 0.3s;
+        }
+        .nav-tab.active { background: #667eea; color: white; }
+        .nav-tab:hover { background: #e9ecef; }
+        .nav-tab.active:hover { background: #5a6fd8; }
+        
+        .container { max-width: 1400px; margin: 2rem auto; padding: 0 1rem; }
+        
+        .summary-cards {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem; margin-bottom: 2rem;
+        }
+        .summary-card {
+            background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center; transition: transform 0.3s;
+        }
+        .summary-card:hover { transform: translateY(-5px); }
+        .summary-card h3 { font-size: 1.1rem; color: #666; margin-bottom: 0.5rem; }
+        .summary-card .amount { font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem; }
+        .summary-card .positive { color: #28a745; }
+        .summary-card .negative { color: #dc3545; }
+        .summary-card .neutral { color: #6c757d; }
+        
+        .charts-section {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;
+        }
+        .chart-container {
+            background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .chart-container h3 { margin-bottom: 1rem; color: #333; }
+        
+        .data-tables {
+            display: grid; grid-template-columns: 1fr; gap: 2rem;
+        }
+        .table-container {
+            background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .table-header {
+            background: #667eea; color: white; padding: 1.5rem; font-size: 1.2rem; font-weight: 600;
+        }
+        .table-content { padding: 1.5rem; }
+        
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f8f9fa; font-weight: 600; color: #333; }
+        tr:hover { background: #f8f9fa; }
+        
+        .btn {
+            padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer;
+            font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.3s;
+        }
+        .btn-primary { background: #667eea; color: white; }
+        .btn-primary:hover { background: #5a6fd8; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-success:hover { background: #218838; }
+        
+        .filters {
+            background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+        }
+        .filters input, .filters select {
+            padding: 0.5rem; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9rem;
+        }
+        
+        .loading { text-align: center; padding: 3rem; color: #666; }
+        .error { background: #f8d7da; color: #721c24; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+        
+        .insights-section {
+            margin: 2rem 0;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .insight-item {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+        
+        .insight-item.success { border-left-color: #28a745; }
+        .insight-item.warning { border-left-color: #ffc107; }
+        .insight-item.info { border-left-color: #17a2b8; }
+        
+        .insight-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .insight-message {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .insight-recommendation {
+            font-size: 0.9rem;
+            color: #495057;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .charts-section { grid-template-columns: 1fr; }
+            .summary-cards { grid-template-columns: 1fr; }
+            .filters { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>💰 Financial Management</h1>
+        <p>Complete cash flow tracking and financial analytics</p>
+    </div>
+    
+    <div class="nav-tabs">
+        <button class="nav-tab active" onclick="showTab('overview')">📊 Overview</button>
+        <button class="nav-tab" onclick="showTab('income')">💰 Income</button>
+        <button class="nav-tab" onclick="showTab('expenses')">💸 Expenses</button>
+        <button class="nav-tab" onclick="showTab('planned')">📅 Planned</button>
+        <a href="/add-financial" class="btn btn-success">➕ Add Entry</a>
+        <a href="/" class="btn btn-primary">🏠 Dashboard</a>
+    </div>
+    
+    <div class="container">
+        <div class="filters">
+            <label>Start Date: <input type="date" id="startDate"></label>
+            <label>End Date: <input type="date" id="endDate"></label>
+            <button class="btn btn-primary" onclick="applyFilters()">Apply Filters</button>
+            <button class="btn" onclick="clearFilters()">Clear</button>
+        </div>
+        
+        <div id="overview-tab" class="tab-content">
+            <div class="summary-cards">
+                <div class="summary-card">
+                    <h3>Total Income</h3>
+                    <div class="amount positive" id="totalIncome">₹0</div>
+                    <small id="incomeCount">0 transactions</small>
+                </div>
+                <div class="summary-card">
+                    <h3>Total Expenses</h3>
+                    <div class="amount negative" id="totalExpenses">₹0</div>
+                    <small id="expenseCount">0 transactions</small>
+                </div>
+                <div class="summary-card">
+                    <h3>Net Cash Flow</h3>
+                    <div class="amount" id="netCashFlow">₹0</div>
+                    <small id="cashFlowRatio">0% margin</small>
+                </div>
+                <div class="summary-card">
+                    <h3>Planned Expenses</h3>
+                    <div class="amount neutral" id="plannedExpenses">₹0</div>
+                    <small id="plannedCount">0 activities</small>
+                </div>
+                <div class="summary-card">
+                    <h3>Projected Cash Flow</h3>
+                    <div class="amount" id="projectedCashFlow">₹0</div>
+                    <small>After planned expenses</small>
+                </div>
+                <div class="summary-card">
+                    <h3>Average Income</h3>
+                    <div class="amount positive" id="avgIncome">₹0</div>
+                    <small>Per transaction</small>
+                </div>
+            </div>
+            
+            <!-- Financial Insights Section -->
+            <div class="insights-section" id="insightsSection">
+                <h3>💡 Financial Insights</h3>
+                <div id="insightsContainer"></div>
+            </div>
+            
+            <div class="charts-section">
+                <div class="chart-container">
+                    <h3>Income vs Expenses</h3>
+                    <canvas id="cashFlowChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Expense Categories</h3>
+                    <canvas id="expenseCategoriesChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Monthly Trends</h3>
+                    <canvas id="monthlyTrendsChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Expense Breakdown</h3>
+                    <canvas id="expenseBreakdownChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button onclick="exportFinancialData()" class="btn btn-success">
+                    📥 Export Financial Data
+                </button>
+            </div>
+        </div>
+        
+        <div id="income-tab" class="tab-content" style="display: none;">
+            <div class="table-container">
+                <div class="table-header">💰 Income Entries</div>
+                <div class="table-content">
+                    <table id="incomeTable">
+                        <thead>
+                            <tr>
+                                <th>Source</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="expenses-tab" class="tab-content" style="display: none;">
+            <div class="table-container">
+                <div class="table-header">💸 Expense Entries</div>
+                <div class="table-content">
+                    <table id="expensesTable">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="planned-tab" class="tab-content" style="display: none;">
+            <div class="table-container">
+                <div class="table-header">📅 Planned Activities</div>
+                <div class="table-content">
+                    <table id="plannedTable">
+                        <thead>
+                            <tr>
+                                <th>Activity</th>
+                                <th>Estimated Cost</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Target Date</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let financialData = {};
+        let cashFlowChart, expenseCategoriesChart;
+        
+        // Tab management
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            
+            document.getElementById(tabName + '-tab').style.display = 'block';
+            event.target.classList.add('active');
+        }
+        
+        // Load financial data with insights
+        async function loadFinancialData() {
+            try {
+                const [summaryResponse, dataResponse, insightsResponse, trendsResponse] = await Promise.all([
+                    fetch('/api/financial/summary'),
+                    fetch('/api/financial/data'),
+                    fetch('/api/financial/insights'),
+                    fetch('/api/financial/trends')
+                ]);
+                
+                const summaryData = await summaryResponse.json();
+                const allData = await dataResponse.json();
+                const insightsData = await insightsResponse.json();
+                const trendsData = await trendsResponse.json();
+                
+                if (summaryData.success) {
+                    updateSummaryCards(summaryData.data);
+                    updateCharts(summaryData.data);
+                }
+                
+                if (allData.success) {
+                    financialData = allData.data;
+                    updateTables();
+                }
+                
+                if (insightsData.success) {
+                    updateInsights(insightsData.data);
+                }
+                
+                if (trendsData.success) {
+                    updateMonthlyTrends(trendsData.data);
+                }
+            } catch (error) {
+                console.error('Error loading financial data:', error);
+                showError('Failed to load financial data');
+            }
+        }
+        
+        // Update summary cards with enhanced metrics
+        function updateSummaryCards(data) {
+            document.getElementById('totalIncome').textContent = `₹${data.total_income.toLocaleString()}`;
+            document.getElementById('totalExpenses').textContent = `₹${data.total_expenses.toLocaleString()}`;
+            
+            const netFlow = document.getElementById('netCashFlow');
+            netFlow.textContent = `₹${data.net_cash_flow.toLocaleString()}`;
+            netFlow.className = `amount ${data.net_cash_flow >= 0 ? 'positive' : 'negative'}`;
+            
+            document.getElementById('plannedExpenses').textContent = `₹${data.planned_expenses.toLocaleString()}`;
+            
+            const projectedFlow = document.getElementById('projectedCashFlow');
+            projectedFlow.textContent = `₹${data.projected_cash_flow.toLocaleString()}`;
+            projectedFlow.className = `amount ${data.projected_cash_flow >= 0 ? 'positive' : 'negative'}`;
+            
+            // Enhanced metrics
+            if (data.metrics) {
+                document.getElementById('incomeCount').textContent = `${data.metrics.income_count} transactions`;
+                document.getElementById('expenseCount').textContent = `${data.metrics.expense_count} transactions`;
+                document.getElementById('plannedCount').textContent = `${data.metrics.planned_count} activities`;
+                document.getElementById('cashFlowRatio').textContent = `${data.metrics.cash_flow_ratio.toFixed(1)}% margin`;
+                document.getElementById('avgIncome').textContent = `₹${data.metrics.avg_income.toLocaleString()}`;
+            }
+        }
+        
+        // Update charts
+        function updateCharts(data) {
+            // Cash Flow Chart
+            const ctx1 = document.getElementById('cashFlowChart').getContext('2d');
+            if (cashFlowChart) cashFlowChart.destroy();
+            
+            cashFlowChart = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ['Income', 'Expenses', 'Net Flow'],
+                    datasets: [{
+                        data: [data.total_income, -data.total_expenses, data.net_cash_flow],
+                        backgroundColor: ['#28a745', '#dc3545', data.net_cash_flow >= 0 ? '#28a745' : '#dc3545'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { callback: value => `₹${value.toLocaleString()}` } }
+                    }
+                }
+            });
+            
+            // Expense Categories Chart
+            const ctx2 = document.getElementById('expenseCategoriesChart').getContext('2d');
+            if (expenseCategoriesChart) expenseCategoriesChart.destroy();
+            
+            const categories = Object.keys(data.expenses_by_category);
+            const amounts = Object.values(data.expenses_by_category);
+            
+            expenseCategoriesChart = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: categories,
+                    datasets: [{
+                        data: amounts,
+                        backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe', '#00f2fe']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: { callbacks: { label: ctx => `${ctx.label}: ₹${ctx.parsed.toLocaleString()}` } }
+                    }
+                }
+            });
+        }
+        
+        // Update tables
+        function updateTables() {
+            // Income table
+            const incomeBody = document.querySelector('#incomeTable tbody');
+            incomeBody.innerHTML = '';
+            financialData.income?.forEach(item => {
+                const row = incomeBody.insertRow();
+                row.innerHTML = `
+                    <td>${item['Income Source']}</td>
+                    <td>₹${item.Amount.toLocaleString()}</td>
+                    <td>${item.Date}</td>
+                    <td>${item.Category}</td>
+                    <td>${item.Notes || '-'}</td>
+                `;
+            });
+            
+            // Expenses table
+            const expensesBody = document.querySelector('#expensesTable tbody');
+            expensesBody.innerHTML = '';
+            financialData.expenses?.forEach(item => {
+                const row = expensesBody.insertRow();
+                row.innerHTML = `
+                    <td>${item.Description}</td>
+                    <td>₹${item.Amount.toLocaleString()}</td>
+                    <td>${item.Date}</td>
+                    <td>${item.Category}</td>
+                    <td>${item.Type}</td>
+                    <td>${item.Notes || '-'}</td>
+                `;
+            });
+            
+            // Planned table
+            const plannedBody = document.querySelector('#plannedTable tbody');
+            plannedBody.innerHTML = '';
+            financialData.planned?.forEach(item => {
+                const row = plannedBody.insertRow();
+                const statusClass = item.Status === 'Completed' ? 'positive' : 
+                                  item.Status === 'Cancelled' ? 'negative' : 'neutral';
+                row.innerHTML = `
+                    <td>${item.Activity}</td>
+                    <td>₹${item['Estimated Cost'].toLocaleString()}</td>
+                    <td>${item.Priority}</td>
+                    <td><span class="${statusClass}">${item.Status}</span></td>
+                    <td>${item['Target Date']}</td>
+                    <td>${item.Notes || '-'}</td>
+                `;
+            });
+        }
+        
+        // Filter functions
+        function applyFilters() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            
+            if (startDate && endDate) {
+                loadFilteredData(startDate, endDate);
+            }
+        }
+        
+        function clearFilters() {
+            document.getElementById('startDate').value = '';
+            document.getElementById('endDate').value = '';
+            loadFinancialData();
+        }
+        
+        async function loadFilteredData(startDate, endDate) {
+            try {
+                const response = await fetch(`/api/financial/summary?startDate=${startDate}&endDate=${endDate}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateSummaryCards(data.data);
+                    updateCharts(data.data);
+                }
+            } catch (error) {
+                console.error('Error loading filtered data:', error);
+            }
+        }
+        
+        // Update insights section
+        function updateInsights(insights) {
+            const container = document.getElementById('insightsContainer');
+            if (!insights || insights.length === 0) {
+                container.innerHTML = '<p>No insights available at this time.</p>';
+                return;
+            }
+            
+            container.innerHTML = insights.map(insight => `
+                <div class="insight-item ${insight.type}">
+                    <div class="insight-title">${insight.title}</div>
+                    <div class="insight-message">${insight.message}</div>
+                    <div class="insight-recommendation">💡 ${insight.recommendation}</div>
+                </div>
+            `).join('');
+        }
+        
+        // Update monthly trends chart
+        function updateMonthlyTrends(trends) {
+            const ctx = document.getElementById('monthlyTrendsChart').getContext('2d');
+            
+            // Group trends by month
+            const months = [...new Set(trends.map(t => t.Month))].sort();
+            const incomeData = months.map(month => {
+                const item = trends.find(t => t.Month === month && t.Type === 'Income');
+                return item ? item.Amount : 0;
+            });
+            const expenseData = months.map(month => {
+                const item = trends.find(t => t.Month === month && t.Type === 'Expenses');
+                return item ? Math.abs(item.Amount) : 0;
+            });
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Income',
+                        data: incomeData,
+                        borderColor: '#28a745',
+                        backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                        fill: true
+                    }, {
+                        label: 'Expenses',
+                        data: expenseData,
+                        borderColor: '#dc3545',
+                        backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { callback: value => `₹${value.toLocaleString()}` }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function showError(message) {
+            const container = document.querySelector('.container');
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.innerHTML = `
+                <strong>Error:</strong> ${message}
+                <button onclick="this.parentElement.remove()" style="float: right; background: none; border: none; color: #721c24; cursor: pointer;">×</button>
+            `;
+            container.insertBefore(errorDiv, container.firstChild);
+            
+            setTimeout(() => errorDiv.remove(), 8000);
+        }
+        
+        // Add export functionality
+        function exportFinancialData() {
+            window.location.href = '/api/financial/export/csv';
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadFinancialData);
+    </script>
+</body>
+</html>

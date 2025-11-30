@@ -24,11 +24,16 @@ import json
 import io
 import os
 import re
+import csv
 import logging
 from logging.handlers import RotatingFileHandler
 from functools import lru_cache
 import warnings
 from config import config
+try:
+    from financial_manager import FinancialManager
+except ImportError:
+    from simple_financial_manager import SimpleFinancialManager as FinancialManager
 
 warnings.filterwarnings('ignore')
 
@@ -122,6 +127,11 @@ CURRENCY_RATES = {
 
 # Global data cache
 DATA_CACHE = {'processed_data': None, 'last_updated': None}
+
+# Financial manager instance - Always use simple manager for reliability
+from simple_financial_manager import SimpleFinancialManager
+financial_manager = SimpleFinancialManager()
+print("💰 Financial Manager: Using CSV-based system for maximum reliability")
 
 # Income stream categories
 INCOME_CATEGORIES = {
@@ -470,6 +480,24 @@ def add_entry_page():
                 return f.read()
         except Exception as e2:
             return f"Error loading form: {e2}. Please check if templates/add_entry.html exists.", 500
+
+@app.route('/financials')
+def financials_page():
+    """Render financial management page"""
+    try:
+        return render_template('financials.html')
+    except Exception as e:
+        app.logger.error(f"Error loading financials.html: {e}")
+        return f"Error loading financials page: {e}", 500
+
+@app.route('/add-financial')
+def add_financial_page():
+    """Render add financial entry page"""
+    try:
+        return render_template('add_financial.html')
+    except Exception as e:
+        app.logger.error(f"Error loading add_financial.html: {e}")
+        return f"Error loading add financial page: {e}", 500
 
 @app.route('/api/kpis')
 @handle_api_errors
@@ -1006,6 +1034,263 @@ def api_platform_options():
         }
     })
 
+# ═══════════════════════════════════════════════════════════════════════════
+# FINANCIAL MANAGEMENT API ROUTES
+# ═══════════════════════════════════════════════════════════════════════════
+
+@app.route('/api/financial/summary')
+@handle_api_errors
+def api_financial_summary():
+    """Get financial summary and cash flow analysis"""
+    try:
+        start_date = request.args.get('startDate')
+        end_date = request.args.get('endDate')
+        
+        summary = financial_manager.get_financial_summary(start_date, end_date)
+        
+        # Convert numpy types to Python types for JSON serialization
+        def convert_types(obj):
+            if hasattr(obj, 'item'):
+                return obj.item()
+            elif isinstance(obj, dict):
+                return {k: convert_types(v) for k, v in obj.items()}
+            elif isinstance(obj, list):
+                return [convert_types(v) for v in obj]
+            else:
+                return obj
+        
+        return jsonify({
+            'success': True,
+            'data': convert_types(summary)
+        })
+    except Exception as e:
+        app.logger.error(f"Financial summary error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/financial/trends')
+@handle_api_errors
+def api_financial_trends():
+    """Get monthly financial trends"""
+    try:
+        trends = financial_manager.get_monthly_trends()
+        
+        return jsonify({
+            'success': True,
+            'data': trends
+        })
+    except Exception as e:
+        app.logger.error(f"Financial trends error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/financial/data')
+@handle_api_errors
+def api_financial_data():
+    """Get all financial data"""
+    try:
+        data = financial_manager.load_data()
+        
+        # Convert data to dict for JSON serialization
+        result = {}
+        for key, items in data.items():
+            if isinstance(items, list):
+                result[key] = items
+            else:
+                result[key] = []
+        
+        return jsonify({
+            'success': True,
+            'data': result
+        })
+    except Exception as e:
+        app.logger.error(f"Financial data error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/financial/add-income', methods=['POST'])
+@handle_api_errors
+def api_add_income():
+    """Add new income entry"""
+    try:
+        data = request.json
+        
+        success = financial_manager.add_income(
+            source=data['source'],
+            amount=data['amount'],
+            date=data['date'],
+            category=data.get('category', 'Other'),
+            notes=data.get('notes', '')
+        )
+        
+        if success:
+            return jsonify({
+                'success': True,
+                'message': 'Income entry added successfully'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': 'Failed to add income entry'
+            }), 500
+            
+    except Exception as e:
+        app.logger.error(f"Add income error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/financial/add-expense', methods=['POST'])
+@handle_api_errors
+def api_add_expense():
+    """Add new expense entry"""
+    try:
+        data = request.json
+        
+        success = financial_manager.add_expense(
+            description=data['description'],
+            amount=data['amount'],
+            date=data['date'],
+            category=data['category'],
+            exp_type=data['type'],
+            notes=data.get('notes', '')
+        )
+        
+        if success:
+            return jsonify({
+                'success': True,
+                'message': 'Expense entry added successfully'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': 'Failed to add expense entry'
+            }), 500
+            
+    except Exception as e:
+        app.logger.error(f"Add expense error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/financial/add-planned', methods=['POST'])
+@handle_api_errors
+def api_add_planned():
+    """Add new planned activity"""
+    try:
+        data = request.json
+        
+        success = financial_manager.add_planned_activity(
+            activity=data['activity'],
+            cost=data['cost'],
+            priority=data['priority'],
+            status=data['status'],
+            target_date=data['target_date'],
+            notes=data.get('notes', '')
+        )
+        
+        if success:
+            return jsonify({
+                'success': True,
+                'message': 'Planned activity added successfully'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': 'Failed to add planned activity'
+            }), 500
+            
+    except Exception as e:
+        app.logger.error(f"Add planned activity error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/financial/options')
+def api_financial_options():
+    """Get financial form options"""
+    return jsonify({
+        'success': True,
+        'data': {
+            'income_categories': ['Digital Products', 'App Revenue', 'Services', 'Consulting', 'Other'],
+            'expense_categories': ['Salaries', 'Outsourcing', 'Tools', 'Business', 'Marketing'],
+            'expense_types': ['Software', 'Service', 'Employee', 'Infrastructure', 'Advertising', 'Other'],
+            'priorities': ['High', 'Medium', 'Low'],
+            'statuses': ['Pending', 'In Progress', 'Completed', 'Cancelled', 'Recurring', 'Planned', 'Scheduled']
+        }
+    })
+
+@app.route('/api/financial/insights')
+@handle_api_errors
+def api_financial_insights():
+    """Get financial insights and recommendations"""
+    try:
+        insights = financial_manager.get_financial_insights()
+        return jsonify({
+            'success': True,
+            'data': insights
+        })
+    except Exception as e:
+        app.logger.error(f"Financial insights error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/financial/breakdown')
+@handle_api_errors
+def api_financial_breakdown():
+    """Get detailed expense breakdown"""
+    try:
+        breakdown = financial_manager.get_expense_breakdown()
+        return jsonify({
+            'success': True,
+            'data': breakdown
+        })
+    except Exception as e:
+        app.logger.error(f"Financial breakdown error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/financial/export/<format>')
+def api_financial_export(format):
+    """Export financial data"""
+    try:
+        data = financial_manager.load_data()
+        
+        if format == 'csv':
+            # Create a combined CSV export
+            output = io.StringIO()
+            output.write("=== AIVELLUM FINANCIAL EXPORT ===\n")
+            output.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+            
+            # Income section
+            output.write("=== INCOME ===\n")
+            if data['income']:
+                fieldnames = data['income'][0].keys()
+                writer = csv.DictWriter(output, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(data['income'])
+            output.write("\n")
+            
+            # Expenses section
+            output.write("=== EXPENSES ===\n")
+            if data['expenses']:
+                fieldnames = data['expenses'][0].keys()
+                writer = csv.DictWriter(output, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(data['expenses'])
+            output.write("\n")
+            
+            # Planned section
+            output.write("=== PLANNED ACTIVITIES ===\n")
+            if data['planned']:
+                fieldnames = data['planned'][0].keys()
+                writer = csv.DictWriter(output, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(data['planned'])
+            
+            output.seek(0)
+            return send_file(
+                io.BytesIO(output.getvalue().encode('utf-8')),
+                mimetype='text/csv',
+                as_attachment=True,
+                download_name=f'aivellum_financial_{datetime.now().strftime("%Y%m%d")}.csv'
+            )
+        
+        return jsonify({'success': False, 'error': 'Invalid format'}), 400
+        
+    except Exception as e:
+        app.logger.error(f"Financial export error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
 @app.route('/debug-filter')
 def debug_filter():
     """Debug filtering"""
@@ -1047,11 +1332,11 @@ def health():
     """Health check"""
     return jsonify({
         'status': 'healthy',
-        'version': '3.0.0',
-        'type': 'Income Stream Tracker',
+        'version': '4.0.0',
+        'type': 'Financial Management Platform',
         'data_loaded': DATA_CACHE['processed_data'] is not None,
         'records': len(DATA_CACHE['processed_data']) if DATA_CACHE['processed_data'] is not None else 0,
-        'features': ['Date Filtering Fixed', 'Trends Ordering Fixed', 'Dynamic Inputs', 'Income Categories']
+        'features': ['Complete Cash Flow', 'Expense Management', 'Financial Planning', 'Income Tracking', 'Financial Analytics']
     })
 
 @app.errorhandler(404)
@@ -1069,7 +1354,7 @@ def internal_error(error):
 def startup_summary():
     """Display startup information"""
     print("\n" + "=" * 80)
-    print(" " * 5 + "🚀 AIVELLUM INCOME STREAM TRACKER v3.0 - COMPREHENSIVE")
+    print(" " * 5 + "🚀 AIVELLUM FINANCIAL MANAGEMENT PLATFORM v4.0")
     print("=" * 80)
     
     print("\n🔄 Loading income data...")
@@ -1086,15 +1371,18 @@ def startup_summary():
     else:
         print("⚠️  No data loaded - check Aivellum_Sales.xlsx")
     
-    print("\n🎯 NEW FEATURES:")
-    print("   ✅ Date filtering FIXED")
-    print("   ✅ Trends chronological order FIXED")
-    print("   ✅ Dynamic platform/user inputs")
-    print("   ✅ Comprehensive income tracking")
+    print("\n🎯 v4.0 FEATURES:")
+    print("   💰 Complete cash flow tracking")
+    print("   💸 Expense management (salaries, tools, outsourcing)")
+    print("   📅 Planned activities and financial planning")
+    print("   📊 Financial dashboard and analytics")
+    print("   ✅ All v3.0 income tracking features")
     
     print("\n🚀 Server starting...")
     print("   📊 Dashboard: http://localhost:5000")
     print("   ➕ Add Income: http://localhost:5000/add-entry")
+    print("   💰 Financials: http://localhost:5000/financials")
+    print("   ➕ Add Financial: http://localhost:5000/add-financial")
     print("   ❤️  Health: http://localhost:5000/health")
     print("\n" + "=" * 80 + "\n")
 
