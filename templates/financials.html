@@ -299,20 +299,22 @@
             event.target.classList.add('active');
         }
         
-        // Load financial data with insights
+        // Load financial data with insights and breakdown
         async function loadFinancialData() {
             try {
-                const [summaryResponse, dataResponse, insightsResponse, trendsResponse] = await Promise.all([
+                const [summaryResponse, dataResponse, insightsResponse, trendsResponse, breakdownResponse] = await Promise.all([
                     fetch('/api/financial/summary'),
                     fetch('/api/financial/data'),
                     fetch('/api/financial/insights'),
-                    fetch('/api/financial/trends')
+                    fetch('/api/financial/trends'),
+                    fetch('/api/financial/breakdown')
                 ]);
                 
                 const summaryData = await summaryResponse.json();
                 const allData = await dataResponse.json();
                 const insightsData = await insightsResponse.json();
                 const trendsData = await trendsResponse.json();
+                const breakdownData = await breakdownResponse.json();
                 
                 if (summaryData.success) {
                     updateSummaryCards(summaryData.data);
@@ -330,6 +332,10 @@
                 
                 if (trendsData.success) {
                     updateMonthlyTrends(trendsData.data);
+                }
+                
+                if (breakdownData.success) {
+                    updateExpenseBreakdown(breakdownData.data);
                 }
             } catch (error) {
                 console.error('Error loading financial data:', error);
@@ -509,20 +515,24 @@
             `).join('');
         }
         
-        // Update monthly trends chart
+        // Update monthly trends chart with enhanced data format
         function updateMonthlyTrends(trends) {
             const ctx = document.getElementById('monthlyTrendsChart').getContext('2d');
             
-            // Group trends by month
-            const months = [...new Set(trends.map(t => t.Month))].sort();
-            const incomeData = months.map(month => {
-                const item = trends.find(t => t.Month === month && t.Type === 'Income');
-                return item ? item.Amount : 0;
-            });
-            const expenseData = months.map(month => {
-                const item = trends.find(t => t.Month === month && t.Type === 'Expenses');
-                return item ? Math.abs(item.Amount) : 0;
-            });
+            if (!trends || trends.length === 0) {
+                new Chart(ctx, {
+                    type: 'line',
+                    data: { labels: [], datasets: [] },
+                    options: { responsive: true }
+                });
+                return;
+            }
+            
+            // Extract data from enhanced format
+            const months = trends.map(t => t.month_name || t.month);
+            const incomeData = trends.map(t => t.income || 0);
+            const expenseData = trends.map(t => t.expenses || 0);
+            const netFlowData = trends.map(t => t.net_flow || 0);
             
             new Chart(ctx, {
                 type: 'line',
@@ -533,19 +543,36 @@
                         data: incomeData,
                         borderColor: '#28a745',
                         backgroundColor: 'rgba(40, 167, 69, 0.1)',
-                        fill: true
+                        fill: false,
+                        tension: 0.4
                     }, {
                         label: 'Expenses',
                         data: expenseData,
                         borderColor: '#dc3545',
                         backgroundColor: 'rgba(220, 53, 69, 0.1)',
-                        fill: true
+                        fill: false,
+                        tension: 0.4
+                    }, {
+                        label: 'Net Flow',
+                        data: netFlowData,
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        fill: false,
+                        tension: 0.4,
+                        borderWidth: 3
                     }]
                 },
                 options: {
                     responsive: true,
                     plugins: {
-                        legend: { position: 'top' }
+                        legend: { position: 'top' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ₹${context.parsed.y.toLocaleString()}`;
+                                }
+                            }
+                        }
                     },
                     scales: {
                         y: {
@@ -568,6 +595,57 @@
             container.insertBefore(errorDiv, container.firstChild);
             
             setTimeout(() => errorDiv.remove(), 8000);
+        }
+        
+        // Update expense breakdown chart
+        function updateExpenseBreakdown(breakdown) {
+            const ctx = document.getElementById('expenseBreakdownChart').getContext('2d');
+            
+            // Filter out summary and empty categories
+            const categories = Object.keys(breakdown).filter(key => 
+                key !== '_summary' && breakdown[key].total > 0
+            );
+            
+            const data = categories.map(cat => breakdown[cat].total);
+            const percentages = categories.map(cat => breakdown[cat].percentage);
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: categories,
+                    datasets: [{
+                        label: 'Amount (₹)',
+                        data: data,
+                        backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const category = categories[context.dataIndex];
+                                    const percentage = percentages[context.dataIndex];
+                                    return [
+                                        `Amount: ₹${context.parsed.y.toLocaleString()}`,
+                                        `Percentage: ${percentage.toFixed(1)}%`,
+                                        `Count: ${breakdown[category].count} items`
+                                    ];
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { callback: value => `₹${value.toLocaleString()}` }
+                        }
+                    }
+                }
+            });
         }
         
         // Add export functionality

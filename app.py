@@ -128,10 +128,10 @@ CURRENCY_RATES = {
 # Global data cache
 DATA_CACHE = {'processed_data': None, 'last_updated': None}
 
-# Financial manager instance - Always use simple manager for reliability
-from simple_financial_manager import SimpleFinancialManager
-financial_manager = SimpleFinancialManager()
-print("💰 Financial Manager: Using CSV-based system for maximum reliability")
+# Financial manager instance - Using enhanced manager for better features
+from enhanced_financial_manager import EnhancedFinancialManager
+financial_manager = EnhancedFinancialManager()
+print("💰 Financial Manager: Using enhanced CSV-based system with advanced analytics")
 
 # Income stream categories
 INCOME_CATEGORIES = {
@@ -1204,26 +1204,18 @@ def api_financial_options():
         'success': True,
         'data': {
             'income_categories': ['Digital Products', 'App Revenue', 'Services', 'Consulting', 'Other'],
-            'expense_categories': ['Salaries', 'Outsourcing', 'Tools', 'Business', 'Marketing'],
-            'expense_types': ['Software', 'Service', 'Employee', 'Infrastructure', 'Advertising', 'Other'],
+            'expense_categories': list(financial_manager.expense_categories.keys()),
+            'expense_types': {
+                'Salaries': ['Employee', 'Freelancer', 'Contractor'],
+                'Tools': ['Software', 'Hardware', 'Service'],
+                'Outsourcing': ['Service', 'Freelancer', 'Agency'],
+                'Business': ['Legal', 'Infrastructure', 'Office'],
+                'Marketing': ['Advertising', 'Content', 'Events']
+            },
             'priorities': ['High', 'Medium', 'Low'],
-            'statuses': ['Pending', 'In Progress', 'Completed', 'Cancelled', 'Recurring', 'Planned', 'Scheduled']
+            'statuses': ['Pending', 'In Progress', 'Completed', 'Cancelled', 'On Hold']
         }
     })
-
-@app.route('/api/financial/insights')
-@handle_api_errors
-def api_financial_insights():
-    """Get financial insights and recommendations"""
-    try:
-        insights = financial_manager.get_financial_insights()
-        return jsonify({
-            'success': True,
-            'data': insights
-        })
-    except Exception as e:
-        app.logger.error(f"Financial insights error: {e}")
-        return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/financial/breakdown')
 @handle_api_errors
@@ -1238,6 +1230,38 @@ def api_financial_breakdown():
     except Exception as e:
         app.logger.error(f"Financial breakdown error: {e}")
         return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/financial/insights')
+@handle_api_errors
+def api_financial_insights():
+    """Get AI-powered financial insights"""
+    try:
+        insights = financial_manager.get_financial_insights()
+        return jsonify({
+            'success': True,
+            'data': insights
+        })
+    except Exception as e:
+        app.logger.error(f"Financial insights error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/financial/cash-flow')
+@handle_api_errors
+def api_financial_cash_flow():
+    """Get detailed cash flow analysis"""
+    try:
+        cash_flow = financial_manager.get_cash_flow_analysis()
+        return jsonify({
+            'success': True,
+            'data': cash_flow
+        })
+    except Exception as e:
+        app.logger.error(f"Cash flow analysis error: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+
+
 
 @app.route('/api/financial/export/<format>')
 def api_financial_export(format):
